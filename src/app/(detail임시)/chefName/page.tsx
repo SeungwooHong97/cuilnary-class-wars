@@ -5,7 +5,11 @@ import Link from "next/link";
 //셰프 props로 받아오기
 //metadata 활용
 
-const chefDetail = () => {
+type Props = {
+	params: { chefName: string };
+};
+
+const chefDetail = async ({ params }: Props) => {
 	return (
 		<div className="flex justify-around items-center min-h-[calc(100vh-56px)]">
 			<div className="flex flex-col justify-center items-center">
