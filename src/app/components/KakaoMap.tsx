@@ -2,7 +2,23 @@
 
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
-export default function KakaoMap() {
+type Restaurant = {
+	id: string;
+	restaurant_name: string;
+	address: string | null;
+	description: string | null;
+	latitude: string | null;
+	longitude: string | null;
+	star: number | null;
+	restaurant_img_url: string | null;
+};
+
+type Props = {
+	restaurants: Restaurant[];
+};
+
+export default function KakaoMap({ restaurants }: Props) {
+	console.log(restaurants);
 	return (
 		<>
 			<Map
@@ -11,7 +27,18 @@ export default function KakaoMap() {
 				style={{ width: "800px", height: "800px" }}
 				level={3}
 			>
-				<MapMarker position={{ lat: 33.55635, lng: 126.795841 }} />
+				{restaurants.map((restaurant) => {
+					return (
+						<div key={restaurant.id}>
+							<MapMarker
+								position={{
+									lat: Number(restaurant.latitude),
+									lng: Number(restaurant.longitude),
+								}}
+							/>
+						</div>
+					);
+				})}
 			</Map>
 		</>
 	);

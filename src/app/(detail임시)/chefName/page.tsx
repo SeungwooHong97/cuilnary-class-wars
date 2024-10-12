@@ -1,43 +1,93 @@
 import KakaoMap from "@/app/components/KakaoMap";
+import { supabase } from "@/lib/supabaseClient";
+import Image from "next/image";
 import Link from "next/link";
 
-//<Link href={`/chefDetail/${chef.name}`}>
-//셰프 props로 받아오기
 //metadata 활용
 
-type Props = {
-	params: { chefName: string };
-};
+// type Props = {
+// 	params: { chefName: string };
+// };
+// { params }: Props
 
-const chefDetail = async ({ params }: Props) => {
+const chefDetail = async () => {
+	const { data, error } = await supabase
+		.from("chef")
+		.select("*, restaurant(*)")
+		.eq("chef_name", "잠봉뵈르맨");
+
+	if (error) {
+		console.error("Error:", error.message);
+		throw new Error("데이터를 가져오는 데 실패했습니다.");
+	}
+
+	console.log(data[0]);
+	const chefData = data[0];
+	const restaurants = chefData.restaurant;
+
 	return (
 		<div className="flex justify-around items-center min-h-[calc(100vh-56px)]">
-			<div className="flex flex-col justify-center items-center">
-				<h1 className="text-lg font-bold">셰프</h1>
-				<div>
-					<Link
-						href={`/chefDetail/{셰프이름}/restaurantDetail/{가게이름}`}
-						className="flex"
-					>
-						<img />
-						<div className="flex flex-col">
-							<h2 className="text-lg font-bold">가게 이름</h2>
-							<div className="flex gap-[10px] items-center">
-								<p className="text-lg font-bold">⭐별점</p>
-								<p className="text-sm font-light">
-									(리뷰 개수)
-								</p>
-								<p className="text-sm font-light">위치</p>
-								<p className="text-sm font-light">
-									전문 분야(specialty)
-								</p>
+			<div className="flex flex-col justify-center items-center gap-[30px]">
+				<Image
+					src={
+						chefData.chef_img_url ??
+						"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8-VorlNYtHd0lxv9dRjs7a9PKdWuEEkXkbg&s"
+					}
+					alt={chefData.chef_name}
+					width={550}
+					height={120}
+				/>
+				{chefData.chef_img_url ? null : (
+					<h1 className="text-lg font-bold my-[30px]">
+						{chefData.chef_name}
+					</h1>
+				)}
+
+				<div className="flex flex-col gap-[30px]">
+					{chefData.restaurant.map((rest) => {
+						return (
+							<div key={rest.id}>
+								<Link
+									href={`/chefName/${rest.restaurant_name}`}
+									className="flex items-center gap-[15px]"
+								>
+									<Image
+										src={
+											rest.restaurant_img_url ??
+											"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8-VorlNYtHd0lxv9dRjs7a9PKdWuEEkXkbg&s"
+										}
+										alt={data[0].chef_name}
+										width={60}
+										height={60}
+									/>
+									<div className="flex flex-col">
+										<h2 className="font-bold">
+											{rest.restaurant_name}
+										</h2>
+										<div className="flex gap-[10px] items-center">
+											<p className="font-bold">
+												⭐{rest.star}
+											</p>
+											<p className="text-sm font-light">
+												{rest.description ??
+													"정보 없음"}
+											</p>
+											●
+											<p className="text-sm font-light">
+												{rest.address
+													?.split(" ")
+													.slice(0, 2)
+													.join(" ")}
+											</p>
+										</div>
+									</div>
+								</Link>
 							</div>
-						</div>
-						<img />
-					</Link>
+						);
+					})}
 				</div>
 			</div>
-			<KakaoMap />
+			<KakaoMap restaurants={restaurants} />
 		</div>
 	);
 };
