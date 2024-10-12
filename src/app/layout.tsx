@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/Header";
+import Script from "next/script";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
 	description: "흑백요리사 : 셰프들의 가게",
 };
 
+const KAKAO_API_KEY = process.env.NEXT_PUBLIC_KAKAO_API_KEY;
+const KAKAO_API_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false`;
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -29,6 +33,8 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
+				<Script src={KAKAO_API_URL} strategy="beforeInteractive" />
+
 				<Header />
 				<div className="mt-[56px]">{children}</div>
 			</body>
