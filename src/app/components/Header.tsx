@@ -15,7 +15,7 @@ const Header = () => {
 					회원가입
 				</Link>
 
-				<Link href={`/chefName`} className="hover:underline font-bold">
+				{/* <Link href={`/chefName`} className="hover:underline font-bold">
 					셰프 상세
 				</Link>
 
@@ -24,7 +24,7 @@ const Header = () => {
 					className="hover:underline font-bold"
 				>
 					가게 상세
-				</Link>
+				</Link> */}
 
 				<Link href={"/myPage"} className="hover:underline font-bold">
 					마이 페이지

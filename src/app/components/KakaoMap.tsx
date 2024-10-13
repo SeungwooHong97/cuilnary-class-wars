@@ -1,17 +1,7 @@
 // "use client";
 
+import { Restaurant } from "@/types/info";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-
-type Restaurant = {
-	id: string;
-	restaurant_name: string;
-	address: string | null;
-	description: string | null;
-	latitude: string | null;
-	longitude: string | null;
-	star: number | null;
-	restaurant_img_url: string | null;
-};
 
 type Props = {
 	restaurants: Restaurant[];
