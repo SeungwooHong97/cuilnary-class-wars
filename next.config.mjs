@@ -5,7 +5,7 @@ const nextConfig = {
 			"ugc-images.catchtable.co.kr",
 			"encrypted-tbn0.gstatic.com",
 			"mjhcmaqftsbfevquhyqc.supabase.co",
-		],
+		]
 	},
 };
 
