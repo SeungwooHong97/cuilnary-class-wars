@@ -19,7 +19,7 @@ const chefDetail = async ({ params }: Props) => {
     throw new Error("데이터를 가져오는 데 실패했습니다.");
   }
 
-  console.log(data);
+  console.log(data[0]);
   const chefData = data[0];
   const restaurants = chefData.restaurant;
 

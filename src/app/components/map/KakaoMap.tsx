@@ -18,10 +18,12 @@ export default function KakaoMap({ restaurants }: Props) {
   >([]);
 
   useEffect(() => {
-    const newPoints = restaurants.map((rest) => ({
-      lat: Number(rest.latitude),
-      lng: Number(rest.longitude)
-    }));
+    const newPoints = restaurants
+      .filter((rest) => rest.latitude && rest.longitude)
+      .map((rest) => ({
+        lat: Number(rest.latitude),
+        lng: Number(rest.longitude)
+      }));
     setPoints(newPoints);
   }, [restaurants]);
 
