@@ -35,7 +35,7 @@ export default function RootLayout({
         <ReactQueryProviders>
           <Script src={KAKAO_API_URL} strategy="beforeInteractive" />
           <Header />
-          <div className="mt-[56px]">{children}</div>
+          <main className="mt-[56px]">{children}</main>
         </ReactQueryProviders>
       </body>
     </html>
