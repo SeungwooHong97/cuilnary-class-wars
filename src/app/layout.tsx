@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ReactQueryProviders>
-          <Script src={KAKAO_API_URL} strategy="lazyOnload" />
+          <Script src={KAKAO_API_URL} strategy="beforeInteractive" />
           <Header />
           <div className="mt-[56px]">{children}</div>
         </ReactQueryProviders>
