@@ -1,35 +1,43 @@
-// "use client";
+"use client";
 
 import { Restaurant } from "@/types/info";
+import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import ReSetttingMapBounds from "./ReSetttingMapBounds";
 
 type Props = {
-	restaurants: Restaurant[];
+  restaurants: Restaurant[];
 };
 
 export default function KakaoMap({ restaurants }: Props) {
-	console.log(restaurants);
-	return (
-		<>
-			<Map
-				id="map"
-				center={{ lat: 33.450701, lng: 126.570667 }}
-				style={{ width: "800px", height: "800px" }}
-				level={3}
-			>
-				{restaurants.map((restaurant) => {
-					return (
-						<div key={restaurant.id}>
-							<MapMarker
-								position={{
-									lat: Number(restaurant.latitude),
-									lng: Number(restaurant.longitude),
-								}}
-							/>
-						</div>
-					);
-				})}
-			</Map>
-		</>
-	);
+  const [points, setPoints] = useState<
+    {
+      lat: number;
+      lng: number;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    const newPoints = restaurants.map((rest) => ({
+      lat: Number(rest.latitude),
+      lng: Number(rest.longitude)
+    }));
+    setPoints(newPoints);
+  }, [restaurants]);
+
+  return (
+    <>
+      <Map
+        id="map"
+        center={{ lat: 36.463648328911795, lng: 128.17089555281063 }}
+        style={{ width: "800px", height: "800px" }}
+        level={13}
+      >
+        {points.map((point, index) => (
+          <MapMarker key={`marker__${point.lat}-${point.lng}-${index}`} position={point} />
+        ))}
+        {points.length > 0 && <ReSetttingMapBounds points={points} />}
+      </Map>
+    </>
+  );
 }
