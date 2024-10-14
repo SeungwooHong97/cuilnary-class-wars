@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
 import { login } from "./actions";
-import useAuthStore from "@/userStore";
+import useAuthStore from "../../../zustand/userStore";
 
 const loginSchema = z.object({
   email: z.string(),
