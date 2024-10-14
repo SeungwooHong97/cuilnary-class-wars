@@ -1,37 +1,52 @@
+"use client";
+
+import useAuthStore from "@/userStore";
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
 
 const Header = () => {
-	return (
-		<header className="bg-[#fffff] shadow-md w-full top-0 fixed z-50">
-			<nav className="container mx-auto px-4 py-4 flex justify-between">
-				<Link href={"/"} className="hover:underline font-bold">
-					홈
-				</Link>
-				<Link href={"/login"} className="hover:underline font-bold">
-					로그인
-				</Link>
+  const { isLoggedIn, setClearAuth } = useAuthStore();
+  const supabase = createClient();
 
-				<Link href={"/signUp"} className="hover:underline font-bold">
-					회원가입
-				</Link>
+  // TODO error 처리
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    setClearAuth();
+  };
 
-				<Link href={`/chefName`} className="hover:underline font-bold">
-					셰프 상세
-				</Link>
+  return (
+    <header className="bg-[#fffff] shadow-md w-full top-0 fixed z-50">
+      <nav className="container mx-auto px-4 py-4 flex justify-between">
+        <Link href={"/"} className="hover:underline font-bold">
+          홈
+        </Link>
+        <Link href={`/chefName`} className="hover:underline font-bold">
+          셰프 상세
+        </Link>
+        <Link href={`/chefName/restaurantName`} className="hover:underline font-bold">
+          가게 상세
+        </Link>
+        <Link href={"/myPage"} className="hover:underline font-bold">
+          마이 페이지
+        </Link>
+        {isLoggedIn ? (
+          <>
+            <button onClick={handleSignOut}>로그아웃</button>
+          </>
+        ) : (
+          <>
+            <Link href={"/login"} className="hover:underline font-bold">
+              로그인
+            </Link>
 
-				<Link
-					href={`/chefName/restaurantName`}
-					className="hover:underline font-bold"
-				>
-					가게 상세
-				</Link>
-
-				<Link href={"/myPage"} className="hover:underline font-bold">
-					마이 페이지
-				</Link>
-			</nav>
-		</header>
-	);
+            <Link href={"/signUp"} className="hover:underline font-bold">
+              회원가입
+            </Link>
+          </>
+        )}
+      </nav>
+    </header>
+  );
 };
 
 export default Header;
