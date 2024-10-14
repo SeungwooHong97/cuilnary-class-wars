@@ -20,12 +20,7 @@ const Header = () => {
         <Link href={"/"} className="hover:underline font-bold">
           홈
         </Link>
-        <Link href={`/chefName`} className="hover:underline font-bold">
-          셰프 상세
-        </Link>
-        <Link href={`/chefName/restaurantName`} className="hover:underline font-bold">
-          가게 상세
-        </Link>
+
         <Link href={"/myPage"} className="hover:underline font-bold">
           마이 페이지
         </Link>

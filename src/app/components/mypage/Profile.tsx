@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { User } from "@/app/types/User";
+import { User } from "../../../types/info";
 
 export default function Profile() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -19,7 +19,7 @@ export default function Profile() {
     profile_img: "/images/default_img.png",
     created_at: new Date().toISOString(), // 현재 시간을 기본값으로 사용
     updated_at: new Date().toISOString(), // 현재 시간을 기본값으로 사용
-    email: "default@example.com",
+    user_email: "default@example.com",
     nickname: "kazesama"
   };
 
@@ -52,9 +52,10 @@ export default function Profile() {
       <Image
         src={user.profile_img || "/images/default_img.png"}
         alt="userImage"
-        width={120}
-        height={120}
-        className="rounded-full mt-2 border border-zinc-400 ... size-60"
+        width={150}
+        height={150}
+        quality={100}
+        className="rounded-full mt-2 border border-zinc-400"
       ></Image>
 
       <div className="ml-10">
@@ -88,7 +89,7 @@ export default function Profile() {
             className="mx-2"
             onClick={() => {
               if (!isEdit) {
-                setNickname(user.nickname);
+                // setNickname(user.nickname);
                 // setImgSrc(user.profile_img?  null );
                 setIsEdit(true);
               }
