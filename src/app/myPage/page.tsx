@@ -1,6 +1,6 @@
 
-import Bookmark from "./_components/Bookmark";
-import Profile from "./_components/Profile";
+import Bookmark from "../components/mypage/Bookmark";
+import Profile from "../components/mypage/Profile";
 
 const myPage = () => {
   return (
