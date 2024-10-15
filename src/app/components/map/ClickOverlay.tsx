@@ -30,19 +30,14 @@ export default function ClcikOverlay({ rest, setSelectedRestaurant }: Props) {
           />
         </div>
         <div>
-          <div className="mb-2">
-            <img
-              src={rest.restaurant_img_url || ""}
-              width="73"
-              height="70"
-              alt={rest.restaurant_name || "이미지 없음"}
-            />
+          <div className="flex justify-center mb-2">
+            <img src={rest.restaurant_img_url?.images[0]} width="100px" height="70px" alt={rest.restaurant_name} />
           </div>
           <div>
             <div className="flex gap-[10px] items-center">
               <p className="text-sm font-light">{rest.address?.split(" ").slice(0, 2).join(" ")}</p>
               <Link href={`https://map.kakao.com/link/search/${encodeURIComponent(rest.restaurant_name)}`} passHref>
-                <span className="text-xs">상세보기</span>
+                <span className="text-xs"> 카카오 지도</span>
               </Link>
             </div>
           </div>
