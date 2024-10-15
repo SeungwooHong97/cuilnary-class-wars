@@ -8,6 +8,7 @@ import { User } from "../../types/info";
 import { login } from "./actions";
 import useAuthStore from "../../../zustand/userStore";
 import { supabase } from "@/lib/supabaseClient";
+import { getSession } from "@/utils/supabase/supabaseApi";
 
 const loginSchema = z.object({
   email: z.string(),
@@ -26,29 +27,35 @@ export default function LoginPage() {
 
   /** 로그인 */
   const handleLogin = async (value: FieldValues) => {
-    const { data } = await login(loginSchema.parse(value));
+    const { error } = await login(loginSchema.parse(value));
 
-    setAccessToken(data.session?.access_token ?? "");
-    setUserId(data.session?.user.id ?? "");
-    setIsLoggedIn(true);
+    if (error) {
+      alert("오류가 발생했습니다.");
+    } else {
+      const { data } = await getSession();
 
-    // db에서 사용자 정보 가져와서 setUserNake,setNickName(바뀌는 정보)
-    if (data.session !== null) {
-      const { data: userData, error: userError } = await supabase
-        .from("user")
-        .select("user_name, nickname")
-        .eq("id", data.session?.user.id)
-        .single<User>();
+      setAccessToken(data.session?.access_token ?? "");
+      setUserId(data.session?.user.id ?? "");
+      setIsLoggedIn(true);
 
-      if (userData) {
-        setUserName(userData.user_name ?? "");
-        setNickname(userData.nickname ?? "");
-      } else {
-        console.log(userError);
+      // db에서 사용자 정보 가져와서 setUserNake,setNickName(바뀌는 정보)
+      if (data.session !== null) {
+        const { data: userData, error: userError } = await supabase
+          .from("user")
+          .select("user_name, nickname")
+          .eq("id", data.session?.user.id)
+          .single<User>();
+
+        if (userData) {
+          setUserName(userData.user_name ?? "");
+          setNickname(userData.nickname ?? "");
+        } else {
+          console.log(userError);
+        }
       }
-    }
 
-    router.push("/");
+      router.push("/");
+    }
   };
 
   return (

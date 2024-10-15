@@ -32,9 +32,10 @@ const updateUserProfile = async (userId: string, nickname: string) => {
 
   if (error) {
     throw new Error(error.message);
+  } else {
+    alert("프로필 변경 완료")
   }
 
-  alert("성공적으로 닉네임 변ㄱ");
 };
 
 export default function Profile() {
