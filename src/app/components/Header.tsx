@@ -1,6 +1,6 @@
 "use client";
 
-import useAuthStore from "@/userStore";
+import useAuthStore from "../../../zustand/userStore";
 import Link from "next/link";
 import { logout } from "@/utils/supabase/supabaseApi";
 
@@ -43,3 +43,4 @@ const Header = () => {
 };
 
 export default Header;
+
