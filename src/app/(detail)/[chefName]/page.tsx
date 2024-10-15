@@ -1,3 +1,4 @@
+import RestaurantCard from "@/app/components/chefDetailPage/RestaurantCard";
 import KakaoMap from "@/app/components/map/KakaoMap";
 import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
@@ -46,34 +47,10 @@ const chefDetail = async ({ params }: Props) => {
         <div className="w-[600px] max-h-[500px] overflow-y-auto p-[20px]">
           {chefData.chef_img_url ? null : <h1 className="text-lg font-bold my-[30px]">{chefData.chef_name}</h1>}
 
+          <input />
           <div className="flex flex-col gap-[30px]">
             {restaurants.map((rest) => {
-              return (
-                <div key={rest.id}>
-                  <Link
-                    href={`/${chefData.chef_name}/${rest.restaurant_name}`}
-                    className="flex items-center gap-[15px]"
-                  >
-                    <Image
-                      src={
-                        rest.restaurant_img_url ??
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8-VorlNYtHd0lxv9dRjs7a9PKdWuEEkXkbg&s"
-                      }
-                      alt={data[0].chef_name}
-                      width={60}
-                      height={60}
-                    />
-                    <div className="flex flex-col">
-                      <h2 className="font-bold">{rest.restaurant_name}</h2>
-                      <div className="flex gap-[10px] items-center">
-                        <p className="font-bold">⭐{rest.star}</p>
-                        <p className="text-sm font-light">{rest.description ?? "정보 없음"}</p>●
-                        <p className="text-sm font-light">{rest.address?.split(" ").slice(0, 2).join(" ")}</p>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              );
+              return <RestaurantCard rest={rest} data={data[0]} />;
             })}
           </div>
         </div>
