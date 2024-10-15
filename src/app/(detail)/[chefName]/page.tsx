@@ -1,87 +1,61 @@
+"use client";
+import RestaurantList from "@/app/components/chefDetailPage/RestaurantList";
 import KakaoMap from "@/app/components/map/KakaoMap";
 import { supabase } from "@/lib/supabaseClient";
-import { Restaurant } from "@/types/info";
+import { Chefs, Restaurant } from "@/types/info";
 import Image from "next/image";
-import Link from "next/link";
-
-//metadata 활용
+import { useEffect, useState } from "react";
 
 type Props = {
   params: { chefName: string };
 };
 
-export function generateMetadata({ params }: Props) {
-  return {
-    title: `흑백요리사 : ${decodeURIComponent(params.chefName)}`,
-    description: `${params.chefName} 상세 페이지`
+const chefDetail = ({ params }: Props) => {
+  const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [chefData, setChefData] = useState<Chefs | null>(null);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+
+  const handleMoveToLocation = (lat: number, lng: number) => {
+    setSelectedLocation({ lat, lng });
   };
-}
 
-const chefDetail = async ({ params }: Props) => {
-  console.log("params", decodeURIComponent(params.chefName));
-  const decodedChefName = decodeURIComponent(params.chefName);
-  const { data, error } = await supabase.from("chef").select("*, restaurant(*)").eq("chef_name", decodedChefName);
+  useEffect(() => {
+    const decodedChefName = decodeURIComponent(params.chefName);
 
-  if (error) {
-    console.error("Error:", error.message);
-    throw new Error("데이터를 가져오는 데 실패했습니다.");
-  }
+    const fetchData = async () => {
+      const { data, error } = await supabase.from("chef").select("*, restaurant(*)").eq("chef_name", decodedChefName);
 
-  console.log(data[0]);
-  const chefData = data[0];
-  const restaurants = chefData.restaurant;
+      if (error) {
+        console.error("Error:", error.message);
+        throw new Error("데이터를 가져오는 데 실패했습니다.");
+      }
 
-  return (
-    <div className="flex justify-around items-center min-h-[calc(100vh-56px)]">
-      <div className="flex flex-col justify-center items-center gap-[30px] w-[800px] ">
-        <Image
-          src={
-            chefData.chef_img_url ??
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8-VorlNYtHd0lxv9dRjs7a9PKdWuEEkXkbg&s"
-          }
-          alt={chefData.chef_name}
-          width={413}
-          height={261}
-        />
+      setChefData(data[0]);
+      setRestaurants(data[0].restaurant);
+    };
 
-        <div className="w-[600px] max-h-[500px] overflow-y-auto p-[20px]">
+    fetchData();
+  }, [params.chefName]);
+
+  if (chefData)
+    return (
+      <div className="flex justify-around items-center min-h-[calc(100vh-56px)]">
+        <div className="flex flex-col justify-center items-center gap-[30px] w-[800px]">
+          <Image
+            src={
+              chefData.chef_img_url ??
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8-VorlNYtHd0lxv9dRjs7a9PKdWuEEkXkbg&s"
+            }
+            alt={chefData.chef_name}
+            width={413}
+            height={261}
+          />
           {chefData.chef_img_url ? null : <h1 className="text-lg font-bold my-[30px]">{chefData.chef_name}</h1>}
-
-          <div className="flex flex-col gap-[30px]">
-            {restaurants.map((rest: Restaurant) => {
-              return (
-                <div key={rest.id}>
-                  <Link
-                    href={`/${chefData.chef_name}/${rest.restaurant_name}`}
-                    className="flex items-center gap-[15px]"
-                  >
-                    <Image
-                      src={
-                        rest.restaurant_img_url ??
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8-VorlNYtHd0lxv9dRjs7a9PKdWuEEkXkbg&s"
-                      }
-                      alt={data[0].chef_name}
-                      width={60}
-                      height={60}
-                    />
-                    <div className="flex flex-col">
-                      <h2 className="font-bold">{rest.restaurant_name}</h2>
-                      <div className="flex gap-[10px] items-center">
-                        <p className="font-bold">⭐{rest.star}</p>
-                        <p className="text-sm font-light">{rest.description ?? "정보 없음"}</p>●
-                        <p className="text-sm font-light">{rest.address?.split(" ").slice(0, 2).join(" ")}</p>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
+          <RestaurantList restaurants={restaurants} data={chefData} handleMoveToLocation={handleMoveToLocation} />
         </div>
+        <KakaoMap restaurants={restaurants} selectedLocation={selectedLocation} />
       </div>
-      <KakaoMap restaurants={restaurants} />
-    </div>
-  );
+    );
 };
 
 export default chefDetail;
