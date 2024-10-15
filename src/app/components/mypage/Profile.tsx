@@ -68,16 +68,16 @@ export default function Profile() {
     }
   }, []);
 
-  // const trimmedProfileImg = profile_img.trim();
+  const trimmedProfileImg = profile_img.trim();
 
-  // const isValidUrl = (url: string) => {
-  //   try {
-  //     new URL(url);
-  //     return true;
-  //   } catch (error) {
-  //     return false;
-  //   }
-  // };
+  const isValidUrl = (url: string) => {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 
   //이미지 업로드 기능
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {

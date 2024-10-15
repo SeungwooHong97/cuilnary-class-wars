@@ -1,18 +1,18 @@
 "use client";
 
 import { Restaurant } from "@/types/info";
-import { useEffect, useState } from "react";
-import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
+import { useEffect, useRef, useState } from "react";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import ReSetttingMapBounds from "./ReSetttingMapBounds";
-import Link from "next/link";
 import ClcikOverlay from "./ClickOverlay";
 import ZoomOverlay from "./ZoomOverlay";
 
 type Props = {
   restaurants: Restaurant[];
+  selectedLocation: { lat: number; lng: number } | null;
 };
 
-export default function KakaoMap({ restaurants }: Props) {
+export default function KakaoMap({ restaurants, selectedLocation }: Props) {
   const [points, setPoints] = useState<
     {
       lat: number;
@@ -22,6 +22,8 @@ export default function KakaoMap({ restaurants }: Props) {
 
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
   const [mapLevel, setMapLevel] = useState(13);
+
+  const mapRef = useRef<any>(null); // 지도 인스턴스 저장
 
   useEffect(() => {
     const newPoints = restaurants
@@ -33,10 +35,19 @@ export default function KakaoMap({ restaurants }: Props) {
     setPoints(newPoints);
   }, [restaurants]);
 
+  useEffect(() => {
+    if (selectedLocation && mapRef.current) {
+      const newCenter = new kakao.maps.LatLng(selectedLocation.lat, selectedLocation.lng);
+      mapRef.current.setCenter(newCenter); // 지도 인스턴스 통해 중심 설정
+      mapRef.current.setLevel(3);
+    }
+  }, [selectedLocation]);
+
   const handleZommChanged = (map: kakao.maps.Map) => {
     setMapLevel(map.getLevel());
   };
 
+  console.log(selectedLocation);
   return (
     <>
       <Map
@@ -45,6 +56,7 @@ export default function KakaoMap({ restaurants }: Props) {
         style={{ width: "800px", height: "800px" }}
         level={13}
         onZoomChanged={handleZommChanged}
+        ref={mapRef}
       >
         {restaurants.map((rest, index) => (
           <div key={`marker__${rest.latitude}-${rest.longitude}-${index}`}>
