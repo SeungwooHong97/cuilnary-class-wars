@@ -1,5 +1,5 @@
 import KakaoMap from "@/app/components/map/KakaoMap";
-import RestaurantDetail from "@/app/components/restaurantDetail/restaurantDetail";
+import RestaurantDetail from "@/app/components/restaurantDetail/RestaurantDetail";
 
 import ReviewInput from "@/app/components/reviews/ReviewInput";
 import { ReviewList } from "@/app/components/reviews/ReviewList";
