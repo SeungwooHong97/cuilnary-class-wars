@@ -5,20 +5,21 @@ import Link from "next/link";
 type Props = {
   rest: Restaurant;
   data: Chefs;
+  handleMoveToLocation: (lat: number, lng: number) => void;
 };
 
-const RestaurantCard = ({ rest, data }: Props) => {
+const RestaurantCard = ({ rest, data, handleMoveToLocation }: Props) => {
   return (
-    <div key={rest.id}>
+    <div className="flex justify-between items-center">
       <Link href={`/${data.chef_name}/${rest.restaurant_name}`} className="flex items-center gap-[15px]">
         <Image
-          src={
-            rest.restaurant_img_url ??
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8-VorlNYtHd0lxv9dRjs7a9PKdWuEEkXkbg&s"
-          }
+          src={rest.restaurant_img_url ?? "/images/default_img.png"}
           alt={data.chef_name}
           width={60}
           height={60}
+          onError={(e) => {
+            e.currentTarget.src = "/images/default_img.png";
+          }}
         />
         <div className="flex flex-col">
           <h2 className="font-bold">{rest.restaurant_name}</h2>
@@ -29,6 +30,7 @@ const RestaurantCard = ({ rest, data }: Props) => {
           </div>
         </div>
       </Link>
+      <button onClick={() => handleMoveToLocation(Number(rest.latitude), Number(rest.longitude))}>위치 이동</button>
     </div>
   );
 };
