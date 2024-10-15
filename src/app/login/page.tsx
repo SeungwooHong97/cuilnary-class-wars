@@ -4,9 +4,10 @@ import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-
+import { User } from "../../types/info";
 import { login } from "./actions";
 import useAuthStore from "../../../zustand/userStore";
+import { supabase } from "@/lib/supabaseClient";
 
 const loginSchema = z.object({
   email: z.string(),
@@ -14,7 +15,7 @@ const loginSchema = z.object({
 });
 
 export default function LoginPage() {
-  const { setAccessToken, setUserId, setUserName, setNickname, setIsLoggedIn } = useAuthStore();
+  const { nickname, setAccessToken, setUserId, setUserName, setNickname, setIsLoggedIn } = useAuthStore();
 
   const { register, handleSubmit } = useForm({
     mode: "onChange",
@@ -29,9 +30,23 @@ export default function LoginPage() {
 
     setAccessToken(data.session?.access_token ?? "");
     setUserId(data.session?.user.id ?? "");
-    setUserName(data.session?.user.user_metadata.user_name ?? "");
-    setNickname(data.session?.user.user_metadata.nickname ?? "");
     setIsLoggedIn(true);
+
+    // db에서 사용자 정보 가져와서 setUserNake,setNickName(바뀌는 정보)
+    if (data.session !== null) {
+      const { data: userData, error: userError } = await supabase
+        .from("user")
+        .select("user_name, nickname")
+        .eq("id", data.session?.user.id)
+        .single<User>();
+
+      if (userData) {
+        setUserName(userData.user_name ?? "");
+        setNickname(userData.nickname ?? "");
+      } else {
+        console.log(userError);
+      }
+    }
 
     router.push("/");
   };
