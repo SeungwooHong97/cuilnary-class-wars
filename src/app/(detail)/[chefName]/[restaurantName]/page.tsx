@@ -4,7 +4,6 @@ import RestaurantDetail from "@/app/components/restaurantDetail/RestaurantDetail
 import ReviewInput from "@/app/components/reviews/ReviewInput";
 import { ReviewList } from "@/app/components/reviews/ReviewList";
 import Reviews from "@/app/components/reviews/Reviews";
-// import { ReviewsContext } from "@/app/components/reviews/ReviewsContext";
 
 import { supabase } from "@/lib/supabaseClient";
 import { Restaurant, Review } from "@/types/info";
@@ -25,17 +24,14 @@ const restaurantDetail = async ({ params }: Props) => {
   }
 
   const restaurantDetail = data[0];
-  console.log(restaurantDetail);
+
   return (
     <div>
       <div>
         <RestaurantDetail rest={restaurantDetail} />
         <KakaoMap restaurants={data} />
       </div>
-      {/* <ReviewsContext.Provider value={{ reviews, setReviews }}> */}
       <Reviews rest={restaurantDetail} />
-
-      {/* </ReviewsContext.Provider> */}
     </div>
   );
 };

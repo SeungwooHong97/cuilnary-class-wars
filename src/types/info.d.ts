@@ -38,3 +38,7 @@ export type Review = {
   user_id: string | null;
   created_at: string | null;
 };
+
+export type Chefs = Chef & {
+  restaurant: Restaurant[];
+};

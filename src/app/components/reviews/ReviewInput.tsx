@@ -50,22 +50,20 @@ const ReviewInput = ({
     <div>
       <input
         type="text"
-        placeholder="댓글을 남겨주세요"
-        value={comment}
-        onChange={(e) => {
-          setComment(e.target.value);
-        }}
-      />
-
-      <input
-        type="text"
         placeholder="평점을 남겨주세요"
         value={star}
         onChange={(e) => {
           setStar(e.target.value);
         }}
       />
-
+      <input
+        type="text"
+        placeholder="댓글을 남겨주세요"
+        value={comment}
+        onChange={(e) => {
+          setComment(e.target.value);
+        }}
+      />
       <button onClick={addComment}>등록</button>
     </div>
   );

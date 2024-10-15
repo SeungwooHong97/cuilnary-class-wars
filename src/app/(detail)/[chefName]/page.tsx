@@ -10,6 +10,13 @@ type Props = {
   params: { chefName: string };
 };
 
+export function generateMetadata({ params }: Props) {
+  return {
+    title: `흑백요리사 : ${decodeURIComponent(params.chefName)}`,
+    description: `${params.chefName} 상세 페이지`
+  };
+}
+
 const chefDetail = async ({ params }: Props) => {
   console.log("params", decodeURIComponent(params.chefName));
   const decodedChefName = decodeURIComponent(params.chefName);
@@ -20,7 +27,7 @@ const chefDetail = async ({ params }: Props) => {
     throw new Error("데이터를 가져오는 데 실패했습니다.");
   }
 
-  console.log(data);
+  console.log(data[0]);
   const chefData = data[0];
   const restaurants = chefData.restaurant;
 
