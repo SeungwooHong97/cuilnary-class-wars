@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import ReSetttingMapBounds from "./ReSetttingMapBounds";
 import Link from "next/link";
-import RestaurantOverlay from "./RestaurantOverlay";
+import ClcikOverlay from "./ClickOverlay";
+import ZoomOverlay from "./ZoomOverlay";
 
 type Props = {
   restaurants: Restaurant[];
@@ -55,21 +56,9 @@ export default function KakaoMap({ restaurants }: Props) {
               clickable={true}
               onClick={() => setSelectedRestaurant(rest)}
             />
-            {mapLevel < 10 && (
-              <CustomOverlayMap
-                position={{
-                  lat: Number(rest.latitude),
-                  lng: Number(rest.longitude)
-                }}
-                yAnchor={0}
-              >
-                <div className="bg-white p-1 rounded-md shadow-sm">
-                  <p className="text-xs">{rest.restaurant_name}</p>
-                </div>
-              </CustomOverlayMap>
-            )}
+            {mapLevel < 10 && <ZoomOverlay rest={rest} />}
             {selectedRestaurant?.restaurant_name === rest.restaurant_name && (
-              <RestaurantOverlay rest={rest} setSelectedRestaurant={setSelectedRestaurant} />
+              <ClcikOverlay rest={rest} setSelectedRestaurant={setSelectedRestaurant} />
             )}
           </div>
         ))}

@@ -8,7 +8,7 @@ type Props = {
   setSelectedRestaurant: Dispatch<SetStateAction<Restaurant | null>>;
 };
 
-export default function RestaurantOverlay({ rest, setSelectedRestaurant }: Props) {
+export default function ClcikOverlay({ rest, setSelectedRestaurant }: Props) {
   return (
     <CustomOverlayMap
       position={{
@@ -51,5 +51,3 @@ export default function RestaurantOverlay({ rest, setSelectedRestaurant }: Props
     </CustomOverlayMap>
   );
 }
-
-RestaurantOverlay;
