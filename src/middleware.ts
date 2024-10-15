@@ -12,6 +12,8 @@ export async function middleware(request: NextRequest) {
     data: { user }
   } = await serverClient.auth.getUser();
 
+  console.log("middleware user :>> ", user);
+
   const isLogin = !!user;
 
   if (isLogin && (request.nextUrl.pathname.startsWith("/login") || request.nextUrl.pathname.startsWith("/signUp"))) {
