@@ -25,11 +25,13 @@ export type Restaurant = {
   star: number | null;
   restaurant_img_url: string | null;
 };
+
 export type Bookmark = {
-  id: number;
+  id: string;
   restaurant_id: string | null;
   user_id: string | null;
 };
+
 
 export type Review = {
   id: string;
@@ -43,3 +45,19 @@ export type Review = {
 export type Chefs = Chef & {
   restaurant: Restaurant[];
 };
+
+
+export type RestaurantParsingData = {
+  restaurant_name: string;
+  restaurant_img_url: string[] | null;
+  star: number | null;
+  chef_name: string ;
+  description: string | null;
+}
+
+
+
+export type BookmarkParsingData = {
+  id: string; 
+  restaurant : RestaurantParsingData[];
+}

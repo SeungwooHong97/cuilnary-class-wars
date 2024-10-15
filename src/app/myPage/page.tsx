@@ -8,7 +8,7 @@ const myPage = () => {
 
 
   return (
-    <div className="container mx-auto xl:max-w-[1280px]">
+    <div className="container mx-auto xl:max-w-[1280px] mt-32">
       <Profile></Profile>
       <Bookmark></Bookmark> 
     </div>
