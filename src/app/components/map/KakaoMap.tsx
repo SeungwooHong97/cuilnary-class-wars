@@ -53,7 +53,7 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
       <Map
         id="map"
         center={{ lat: 36.463648328911795, lng: 128.17089555281063 }}
-        style={{ width: "400px", height: "400px" }}
+        style={{ width: "800px", height: "800px" }}
         level={13}
         onZoomChanged={handleZommChanged}
         ref={mapRef}
