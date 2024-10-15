@@ -15,7 +15,8 @@ const loginSchema = z.object({
 });
 
 export default function LoginPage() {
-  const { nickname, setAccessToken, setUserId, setUserName, setNickname, setIsLoggedIn } = useAuthStore();
+  const { nickname, setAccessToken, setUserId, setUserName, setNickname, setIsLoggedIn, setProfile_img } =
+    useAuthStore();
 
   const { register, handleSubmit } = useForm({
     mode: "onChange",
@@ -34,25 +35,29 @@ export default function LoginPage() {
       } else {
         const { data } = await getSession();
 
-      setAccessToken(data.session?.access_token ?? "");
-      setUserId(data.session?.user.id ?? "");
-      setIsLoggedIn(true);
+        setAccessToken(data.session?.access_token ?? "");
+        setUserId(data.session?.user.id ?? "");
+        setIsLoggedIn(true);
 
-      // db에서 사용자 정보 가져와서 setUserNake,setNickName(바뀌는 정보)
-      if (data.session !== null) {
-        const { data: userData, error: userError } = await supabase
-          .from("user")
-          .select("user_name, nickname")
-          .eq("id", data.session?.user.id)
-          .single<User>();
+        // db에서 사용자 정보 가져와서 setUserNake,setNickName(바뀌는 정보)
+        if (data.session !== null) {
+          const { data: userData, error: userError } = await supabase
+            .from("user")
+            .select("user_name, nickname")
+            .eq("id", data.session?.user.id)
+            .single<User>();
 
-        if (userData) {
-          setUserName(userData.user_name ?? "");
-          setNickname(userData.nickname ?? "");
-        } else {
-          console.log(userError);
+          if (userData) {
+            setUserName(userData.user_name ?? "");
+            setNickname(userData.nickname ?? "");
+            setProfile_img(
+              userData.profile_img ??
+                "https://mjhcmaqftsbfevquhyqc.supabase.co/storage/v1/object/sign/user_profile/default_img.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ1c2VyX3Byb2ZpbGUvZGVmYXVsdF9pbWcucG5nIiwiaWF0IjoxNzI4OTMzOTg3LCJleHAiOjE3NjA0Njk5ODd9.zkJMRvGI8vpWKsR1c5nskb88fibWo_uM_lzQJzfZVbk&t=2024-10-14T19%3A26%3A28.430Z"
+            );
+          } else {
+            console.log(userError);
+          }
         }
-      }
 
         router.push("/");
       }
