@@ -1,11 +1,11 @@
 export type User = {
-	created_at: string;
-	id: string;
-	profile_img: string | null;
-	updated_at: string | null;
-	user_email: string | null;
-	user_name: string | null;
-	nickname: string | null;
+  created_at: string;
+  id: string;
+  profile_img: string | null;
+  updated_at: string | null;
+  user_email: string | null;
+  user_name: string | null;
+  nickname: string | null;
 };
 export type Chef = {
   chef_class: string | null;
@@ -23,8 +23,9 @@ export type Restaurant = {
   latitude: string | null;
   longitude: string | null;
   star: number | null;
-  restaurant_img_url: string | null;
+  restaurant_img_url: { images: string[] } | null;
 };
+
 export type Bookmark = {
   id: number;
   restaurant_id: string | null;
