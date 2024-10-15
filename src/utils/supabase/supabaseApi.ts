@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
 interface User {
@@ -13,7 +12,7 @@ interface User {
 export async function signup(formData: User) {
   const supabase = createClient();
 
-  const { error } = await supabase.auth.signUp({
+  return await supabase.auth.signUp({
     email: formData.email,
     password: formData.password,
     options: {
@@ -24,10 +23,28 @@ export async function signup(formData: User) {
       }
     }
   });
+}
 
-  if (error) {
-    redirect("/error");
-  }
+interface LoginUser {
+  email: string;
+  password: string;
+}
 
-  redirect("/");
+export async function login(formData: LoginUser) {
+  const supabase = createClient();
+
+  return await supabase.auth.signInWithPassword({
+    email: formData.email,
+    password: formData.password
+  });
+}
+
+export async function getSession() {
+  const supabase = createClient();
+  return await supabase.auth.getSession();
+}
+
+export async function logout() {
+  const supabase = createClient();
+  return await supabase.auth.signOut();
 }

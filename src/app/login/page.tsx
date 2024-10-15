@@ -4,9 +4,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-
-import { login } from "./actions";
 import useAuthStore from "@/userStore";
+import { getSession, login } from "@/utils/supabase/supabaseApi";
 
 const loginSchema = z.object({
   email: z.string(),
@@ -25,15 +24,21 @@ export default function LoginPage() {
 
   /** 로그인 */
   const handleLogin = async (value: FieldValues) => {
-    const { data } = await login(loginSchema.parse(value));
+    const { error } = await login(loginSchema.parse(value));
 
-    setAccessToken(data.session?.access_token ?? "");
-    setUserId(data.session?.user.id ?? "");
-    setUserName(data.session?.user.user_metadata.user_name ?? "");
-    setNickname(data.session?.user.user_metadata.nickname ?? "");
-    setIsLoggedIn(true);
+    if (error) {
+      alert("오류가 발생했습니다.");
+    } else {
+      const { data } = await getSession();
 
-    router.push("/");
+      setAccessToken(data.session?.access_token ?? "");
+      setUserId(data.session?.user.id ?? "");
+      setUserName(data.session?.user.user_metadata.user_name ?? "");
+      setNickname(data.session?.user.user_metadata.nickname ?? "");
+      setIsLoggedIn(true);
+
+      router.push("/");
+    }
   };
 
   return (
