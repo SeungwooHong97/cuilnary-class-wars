@@ -5,10 +5,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { User } from "../../types/info";
-import { login } from "./actions";
 import useAuthStore from "../../../zustand/userStore";
 import { supabase } from "@/lib/supabaseClient";
-import { getSession } from "@/utils/supabase/supabaseApi";
+import { getSession, login } from "@/utils/supabase/supabaseApi";
 
 const loginSchema = z.object({
   email: z.string(),
