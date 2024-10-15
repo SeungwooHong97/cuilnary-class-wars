@@ -1,5 +1,6 @@
 import KakaoMap from "@/app/components/map/KakaoMap";
 import { supabase } from "@/lib/supabaseClient";
+import { Restaurant } from "@/types/info";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -47,7 +48,7 @@ const chefDetail = async ({ params }: Props) => {
           {chefData.chef_img_url ? null : <h1 className="text-lg font-bold my-[30px]">{chefData.chef_name}</h1>}
 
           <div className="flex flex-col gap-[30px]">
-            {restaurants.map((rest) => {
+            {restaurants.map((rest: Restaurant) => {
               return (
                 <div key={rest.id}>
                   <Link
