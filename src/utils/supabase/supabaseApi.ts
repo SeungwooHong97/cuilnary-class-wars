@@ -8,11 +8,10 @@ interface User {
   name: string;
   nickname: string;
 }
-
 export async function signup(formData: User) {
   const supabase = createClient();
 
-  return await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: formData.email,
     password: formData.password,
     options: {
@@ -23,6 +22,12 @@ export async function signup(formData: User) {
       }
     }
   });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return { data };
 }
 
 interface LoginUser {
@@ -33,10 +38,16 @@ interface LoginUser {
 export async function login(formData: LoginUser) {
   const supabase = createClient();
 
-  return await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: formData.email,
     password: formData.password
   });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return { data };
 }
 
 export async function getSession() {
