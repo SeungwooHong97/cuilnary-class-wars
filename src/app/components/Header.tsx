@@ -2,15 +2,13 @@
 
 import useAuthStore from "@/userStore";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
+import { logout } from "@/utils/supabase/supabaseApi";
 
 const Header = () => {
   const { isLoggedIn, setClearAuth } = useAuthStore();
-  const supabase = createClient();
 
-  // TODO error 처리
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    logout();
     setClearAuth();
   };
 
