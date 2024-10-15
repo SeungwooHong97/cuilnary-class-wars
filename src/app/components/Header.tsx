@@ -13,7 +13,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[#fffff] shadow-md w-full top-0 fixed z-50">
+    <header className="shadow-md w-full top-0 fixed z-50">
       <nav className="container mx-auto px-4 py-4 flex justify-between">
         <Link href={"/"} className="hover:underline font-bold">
           홈
@@ -43,4 +43,3 @@ const Header = () => {
 };
 
 export default Header;
-

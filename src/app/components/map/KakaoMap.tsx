@@ -50,11 +50,11 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
   };
 
   return (
-    <>
+    <div className="relative">
       <Map
         id="map"
         center={{ lat: 36.463648328911795, lng: 128.17089555281063 }}
-        style={{ width: "800px", height: "800px" }}
+        style={{ width: "1100px", height: "800px" }}
         level={13}
         onZoomChanged={handleZommChanged}
         ref={mapRef}
@@ -75,8 +75,12 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
             )}
           </div>
         ))}
-        {points.length > 0 && <ReSetttingMapBounds points={points} />}
+        {points.length > 0 && (
+          <div className="absolute bottom-5 right-5 z-10">
+            <ReSetttingMapBounds points={points} />
+          </div>
+        )}
       </Map>
-    </>
+    </div>
   );
 }
