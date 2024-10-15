@@ -24,20 +24,25 @@ export default function LoginPage() {
 
   /** 로그인 */
   const handleLogin = async (value: FieldValues) => {
-    const { error } = await login(loginSchema.parse(value));
+    try {
+      const response = await login(loginSchema.parse(value));
 
-    if (error) {
-      alert("오류가 발생했습니다.");
-    } else {
-      const { data } = await getSession();
+      if (response.error) {
+        throw new Error(response.error);
+      } else {
+        const { data } = await getSession();
 
-      setAccessToken(data.session?.access_token ?? "");
-      setUserId(data.session?.user.id ?? "");
-      setUserName(data.session?.user.user_metadata.user_name ?? "");
-      setNickname(data.session?.user.user_metadata.nickname ?? "");
-      setIsLoggedIn(true);
+        setAccessToken(data.session?.access_token ?? "");
+        setUserId(data.session?.user.id ?? "");
+        setUserName(data.session?.user.user_metadata.user_name ?? "");
+        setNickname(data.session?.user.user_metadata.nickname ?? "");
+        setIsLoggedIn(true);
 
-      router.push("/");
+        router.push("/");
+      }
+    } catch (error) {
+      console.log("로그인 오류 발생 : ", error);
+      alert(error);
     }
   };
 

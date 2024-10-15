@@ -40,22 +40,21 @@ export default function SignUpPage() {
   const router = useRouter();
 
   const handleSignUp = async (value: FieldValues) => {
-    const { error } = await signup(signUpSchema.parse(value));
+    try {
+      const response = await signup(signUpSchema.parse(value));
 
-    /* 
-    오류가 발생하면 오류메세지가.. 
-    서버 컴포넌트에서 클라이언트 컴포넌트로 전달할 수 있는 것은 
-    일반 객체와 몇 가지 내장 객체뿐입니다. 
-    클래스나 널 프로토타입은 지원되지 않습니다. 
-    */
-
-    if (error) {
-      alert("오류가 발생했습니다. 다시 시도해주세요.");
-    } else {
-      alert("회원가입이 완료되었습니다.");
-      router.push("/login");
+      if (response.error) {
+        throw new Error(response.error);
+      } else {
+        alert("회원가입이 완료되었습니다.");
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log("회원가입 오류 발생 : ", error);
+      alert(error);
     }
   };
+
   return (
     <div className="flex flex-col items-center justify-center h-lvh gap-3">
       <h2>Culinary War Store</h2>
