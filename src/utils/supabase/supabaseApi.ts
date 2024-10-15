@@ -8,7 +8,6 @@ interface User {
   name: string;
   nickname: string;
 }
-
 export async function signup(formData: User) {
   const supabase = createClient();
 
@@ -25,11 +24,10 @@ export async function signup(formData: User) {
   });
 
   if (error) {
-    console.error("회원가입 오류:", error.message); // 오류 메시지 출력
-    throw error; // 오류를 발생시켜 상위 호출자에게 전달
+    return { error: error.message };
   }
 
-  return data; // 성공 시 데이터 반환
+  return { data };
 }
 
 interface LoginUser {
@@ -40,10 +38,16 @@ interface LoginUser {
 export async function login(formData: LoginUser) {
   const supabase = createClient();
 
-  return await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: formData.email,
     password: formData.password
   });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return { data };
 }
 
 export async function getSession() {
