@@ -29,7 +29,7 @@ const restaurantDetail = async ({ params }: Props) => {
     <div>
       <div>
         <RestaurantDetail rest={restaurantDetail} />
-        <KakaoMap restaurants={data} />
+        <KakaoMap restaurants={data} selectedLocation={null} />
       </div>
       <Reviews rest={restaurantDetail} />
     </div>

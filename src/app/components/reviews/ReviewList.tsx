@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { Restaurant, Review } from "@/types/info";
 import React, { DetailedHTMLProps, InputHTMLAttributes, SetStateAction, useContext, useEffect, useState } from "react";
 import ReviewInput from "./ReviewInput";
+import useAuthStore from "@/userStore";
 // import { ReviewsContext } from "./ReviewsContext";
 
 // type Props = {
@@ -19,6 +20,7 @@ export const ReviewList = ({
   reviews: Review[];
   setReviews: React.Dispatch<SetStateAction<Review[]>>;
 }) => {
+  const { userId, nickname } = useAuthStore();
   //  number을 담아도되고 null을 담아도 되고
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [comment, setComment] = useState<any>("");
@@ -79,8 +81,33 @@ export const ReviewList = ({
     }
   };
 
+  function reviewToStar(starNumber: string) {
+    switch (starNumber) {
+      case "1":
+        return "⭐";
+
+      case "2":
+        return "⭐⭐";
+
+      case "3":
+        return "⭐⭐⭐";
+
+      case "4":
+        return "⭐⭐⭐⭐";
+
+      case "5":
+        return "⭐⭐⭐⭐⭐";
+    }
+  }
+
+  console.log(reviews);
+  const total = reviews.reduce((sum, obj) => sum + Number(obj.star), 0);
+  const average = total / reviews.length;
+
   return (
     <div>
+      <p>총 댓글수: {reviews.length}</p>
+      <p>평점: {average}</p>
       {reviews.map((review, index) => {
         return (
           <div key={review.id}>
@@ -100,25 +127,28 @@ export const ReviewList = ({
                     setComment(e.target.value);
                   }}
                 />
+
                 <button onClick={() => changeReview(review)}>완료</button>
               </div>
             ) : (
               <div>
-                <p>{review.star}</p>
+                <p>{nickname}</p>
+                <p>{reviewToStar(review.star)}</p>
                 <p>{review.review_content}</p>
               </div>
             )}
-
-            <button
-              onClick={() => {
-                setEditIndex(index);
-                setStar(review.star);
-                setComment(review.review_content);
-              }}
-            >
-              수정
-            </button>
-            <button onClick={() => deleteReview(review.id)}>삭제</button>
+            {userId === review.user_id && (
+              <button
+                onClick={() => {
+                  setEditIndex(index);
+                  setStar(review.star);
+                  setComment(review.review_content);
+                }}
+              >
+                수정
+              </button>
+            )}
+            {userId === review.user_id && <button onClick={() => deleteReview(review.id)}>삭제</button>}
           </div>
         );
       })}
