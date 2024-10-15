@@ -2,8 +2,11 @@
 
 import { Restaurant } from "@/types/info";
 import { useEffect, useState } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import ReSetttingMapBounds from "./ReSetttingMapBounds";
+import Link from "next/link";
+import ClcikOverlay from "./ClickOverlay";
+import ZoomOverlay from "./ZoomOverlay";
 
 type Props = {
   restaurants: Restaurant[];
@@ -17,13 +20,22 @@ export default function KakaoMap({ restaurants }: Props) {
     }[]
   >([]);
 
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
+  const [mapLevel, setMapLevel] = useState(13);
+
   useEffect(() => {
-    const newPoints = restaurants.map((rest) => ({
-      lat: Number(rest.latitude),
-      lng: Number(rest.longitude)
-    }));
+    const newPoints = restaurants
+      .filter((rest) => rest.latitude && rest.longitude)
+      .map((rest) => ({
+        lat: Number(rest.latitude),
+        lng: Number(rest.longitude)
+      }));
     setPoints(newPoints);
   }, [restaurants]);
+
+  const handleZommChanged = (map: kakao.maps.Map) => {
+    setMapLevel(map.getLevel());
+  };
 
   return (
     <>
@@ -32,9 +44,23 @@ export default function KakaoMap({ restaurants }: Props) {
         center={{ lat: 36.463648328911795, lng: 128.17089555281063 }}
         style={{ width: "800px", height: "800px" }}
         level={13}
+        onZoomChanged={handleZommChanged}
       >
-        {points.map((point, index) => (
-          <MapMarker key={`marker__${point.lat}-${point.lng}-${index}`} position={point} />
+        {restaurants.map((rest, index) => (
+          <div key={`marker__${rest.latitude}-${rest.longitude}-${index}`}>
+            <MapMarker
+              position={{
+                lat: Number(rest.latitude),
+                lng: Number(rest.longitude)
+              }}
+              clickable={true}
+              onClick={() => setSelectedRestaurant(rest)}
+            />
+            {mapLevel < 10 && <ZoomOverlay rest={rest} />}
+            {selectedRestaurant?.restaurant_name === rest.restaurant_name && (
+              <ClcikOverlay rest={rest} setSelectedRestaurant={setSelectedRestaurant} />
+            )}
+          </div>
         ))}
         {points.length > 0 && <ReSetttingMapBounds points={points} />}
       </Map>
