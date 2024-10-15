@@ -9,21 +9,21 @@ export async function middleware(request: NextRequest) {
   const serverClient = createClient();
 
   /** auth 모듈이 회원가입과 동시에 자동으로 로그인 세션을 생성하고있어서 문제임 */
-  // const {
-  //   data: { user }
-  // } = await serverClient.auth.getUser();
+  const {
+    data: { user }
+  } = await serverClient.auth.getUser();
 
-  // console.log("middleware user :>> ", user);
+  console.log("middleware user :>> ", user);
 
-  // const isLogin = !!user;
+  const isLogin = !!user;
 
-  // if (isLogin && (request.nextUrl.pathname.startsWith("/login") || request.nextUrl.pathname.startsWith("/signUp"))) {
-  //   return NextResponse.redirect(new URL("/", request.url));
-  // }
+  if (isLogin && (request.nextUrl.pathname.startsWith("/login") || request.nextUrl.pathname.startsWith("/signUp"))) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
-  // if (!isLogin && request.nextUrl.pathname.startsWith("/myPage")) {
-  //   return NextResponse.redirect(new URL("/", request.url));
-  // }
+  if (!isLogin && request.nextUrl.pathname.startsWith("/myPage")) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
   return NextResponse.next();
 }
