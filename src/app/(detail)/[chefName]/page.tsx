@@ -9,6 +9,13 @@ type Props = {
   params: { chefName: string };
 };
 
+export function generateMetadata({ params }: Props) {
+  return {
+    title: `흑백요리사 : ${decodeURIComponent(params.chefName)}`,
+    description: `${params.chefName} 상세 페이지`
+  };
+}
+
 const chefDetail = async ({ params }: Props) => {
   console.log("params", decodeURIComponent(params.chefName));
   const decodedChefName = decodeURIComponent(params.chefName);
