@@ -8,7 +8,7 @@ type Props = {
   params: { restaurantName: string };
 };
 
-export const generateMetada = ({ params }: Props) => {
+export const generateMetadata = ({ params }: Props) => {
   return {
     title: `${params.restaurantName} 상세정보`,
     description: `${params.restaurantName}에 대한 상세정보, 위치 및 리뷰를 확인 할 수 있습니다`

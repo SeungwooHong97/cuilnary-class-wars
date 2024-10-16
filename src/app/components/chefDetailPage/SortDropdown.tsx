@@ -1,5 +1,5 @@
 import { Restaurant } from "@/types/info";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 type Props = {
   restaurants: Restaurant[];

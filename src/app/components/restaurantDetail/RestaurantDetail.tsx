@@ -9,9 +9,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-type Props = {
-  params: { restaurantName: string };
-};
 
 const RestaurantDetail = async ({ rest }: { rest: Restaurant }) => {
   const { data, error } = await supabase.from("restaurant").select().eq("restaurant_name", rest.restaurant_name);

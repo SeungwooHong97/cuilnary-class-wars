@@ -1,15 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import useAuthStore from "../../../../zustand/userStore";
 import { supabase } from "@/lib/supabaseClient";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CustomBookmark } from "@/types/info";
+
 
 export default function Bookmark() {
   const { userId } = useAuthStore();
 
-  const [bookmarks, setBookmarks] = useState<CustomBookmark[]>([]);
+  // const [bookmarks, setBookmarks] = useState<CustomBookmark[]>([]);
 
   useEffect(() => {
     // 사용자의 찜한(좋아요)누른 식당의 리스트를 가져온다.
@@ -47,14 +47,7 @@ export default function Bookmark() {
 
   return (
     <div>
-      {bookmarks.map((bookmark) => {
-        return (
-          <div key={bookmark.id}>
-            {bookmark.id}
-            {/* {bookmark.restaurant} */}
-          </div>
-        );
-      })}
+      <h1>test</h1>
     </div>
   );
 }
