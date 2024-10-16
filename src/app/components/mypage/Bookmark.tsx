@@ -5,31 +5,12 @@ import { supabase } from "@/lib/supabaseClient";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
-
-// 타입 정의
-interface RestaurantImgUrl {
-  images: string[];
-}
-
-interface Restaurant {
-  star: number;
-  chef_name: string;
-  description: string | null;
-  restaurant_name: string;
-  restaurant_img_url: string[] | RestaurantImgUrl; // 배열 또는 객체 형태
-}
-
-// 북마크 타입 정의
-interface Bookmark {
-  id: string; // 고유 식별자
-  restaurant: Restaurant[]; // 레스토랑 배열
-}
+import { CustomBookmark } from "@/types/info";
 
 export default function Bookmark() {
-  const { userId, userName, profile_img, nickname, isLoggedIn, setNickname, setUserName, setProfile_img } =
-    useAuthStore();
+  const { userId } = useAuthStore();
 
-  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+  const [bookmarks, setBookmarks] = useState<CustomBookmark[]>([]);
 
   useEffect(() => {
     // 사용자의 찜한(좋아요)누른 식당의 리스트를 가져온다.
@@ -55,39 +36,26 @@ export default function Bookmark() {
         .eq("user_id", userId);
 
       if (error) {
-        console.error(error);
-        return;
+        console.error("Error fetching bookmarks:", error);
+        toast.error("북마크 데이터를 불러오는데 실패했습니다.");
+      } else if (data) {
+        // setBookmarks(data);
+        // console.log(bookmarks[0].restaurant);
       }
-
-      setBookmarks(data as Bookmark[]);
     };
     getBookmark();
   }, [userId]);
 
   return (
-    // <div>
-    //   {
-    // bookmarks.map((bookmark) => (
-    //   <div key={bookmark.id}>
-    //     {bookmark.restaurant.map((rest) => (
-    //       <div key={rest.restaurant_name}>
-    //         <h2>{rest.restaurant_name || "이름 없음"}</h2> {/* restaurant_name 출력 */}
-    //         <p>셰프: {rest.chef_name || "이름 없음"}</p>
-    //         <p>설명: {rest.description || "설명 없음"}</p>
-    //         {Array.isArray(rest.restaurant_img_url) ? (
-    //           rest.restaurant_img_url.map((url, index) =>
-    //             url ? <img key={index} src={url} alt={`이미지 ${index + 1}`} /> : null
-    //           )
-    //         ) : (
-    //           <img src={rest.restaurant_img_url.images[0]} alt="레스토랑 이미지" />
-    //         )
-    //         }
-    //       </div>
-    //     ))}
-    //   </div>
-    // ))}
-
-    // </div>
-    <div>test</div>
+    <div>
+      {bookmarks.map((bookmark) => {
+        return (
+          <div key={bookmark.id}>
+            {bookmark.id}
+            {/* {bookmark.restaurant} */}
+          </div>
+        );
+      })}
+    </div>
   );
 }
