@@ -2,7 +2,8 @@
 
 import { supabase } from "@/lib/supabaseClient";
 import { Restaurant, Review } from "@/types/info";
-import React, {  SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
+
 import useAuthStore from "../../../../zustand/userStore";
 
 // import { ReviewsContext } from "./ReviewsContext";

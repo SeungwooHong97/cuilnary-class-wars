@@ -1,6 +1,7 @@
 import KakaoMap from "@/app/components/map/KakaoMap";
 import RestaurantDetail from "@/app/components/restaurantDetail/RestaurantDetail";
 import RestaurantHeader from "@/app/components/restaurantDetail/RestaurantHeader";
+
 import Reviews from "@/app/components/reviews/Reviews";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -25,7 +26,7 @@ const restaurantDetail = async ({ params }: Props) => {
   }
 
   const restaurantDetail = data[0];
-
+  console.log("이거이거", restaurantDetail);
   return (
     <div>
       <div>
