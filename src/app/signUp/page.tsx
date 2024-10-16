@@ -58,7 +58,7 @@ export default function SignUpPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-lvh gap-6">
-      <h2 className="font-extrabold	text-3xl">Culinary War Store</h2>
+      <h2 className="font-extrabold	text-3xl text-gray-500">환영합니다!</h2>
       <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col gap-5 w-96">
         <input placeholder="이메일" {...register("email")} className="border-solid	border-2 h-12 pl-2  rounded-lg" />
         {errors.email && <p className="text-red-500 text-sm pl-1">{String(errors.email.message)}</p>}
@@ -87,7 +87,9 @@ export default function SignUpPage() {
         />
         {errors.nickname && <p className="text-red-500 text-sm pl-1">{String(errors.nickname.message)}</p>}
 
-        <button type="submit">회원가입</button>
+        <button type="submit" className="border-solid	border-2 h-12 pl-2 text-white	bg-black font-bold rounded-lg	">
+          회원가입
+        </button>
       </form>
       <p className="text-gray-500">
         이미 계정이 있으신가요? <Link href={"/login"}>로그인 하러가기</Link>{" "}
