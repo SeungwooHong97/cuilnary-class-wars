@@ -18,8 +18,7 @@ export default function Bookmark() {
       if (!userId) {
         return; // userId가 유효하지 않으면 함수 종료
       }
-
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from("bookmark")
         .select(
           `
@@ -35,10 +34,12 @@ export default function Bookmark() {
         )
         .eq("user_id", userId);
 
+
       if (error) {
         console.error("Error fetching bookmarks:", error);
         toast.error("북마크 데이터를 불러오는데 실패했습니다.");
       } else if (data) {
+        console.log(data);
         // setBookmarks(data);
         // console.log(bookmarks[0].restaurant);
       }
@@ -50,9 +51,9 @@ export default function Bookmark() {
     <div>
       {bookmarks.map((bookmark) => {
         return (
-          <div key={bookmark.id}>
-            {bookmark.id}
-            {/* {bookmark.restaurant} */}
+          <div>
+            {/* {bookmark.id} */}
+            {/* {bookmark.restaurant[0]} */}
           </div>
         );
       })}

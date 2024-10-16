@@ -48,13 +48,16 @@ export type Chefs = Chef & {
 export type CustomBookmark = {
   id: string;
   restaurant: CustomRestaurant;
-};
+} | null;
 
 export type CustomRestaurant = {
   chef_name: string | null;
   restaurant_name: string;
   description: string | null;
   star: number | null;
-  restaurant_img_url: { images: string[] } | null;
+  restaurant_img_url: CustomImage;
 };
 
+export type CustomImage = {
+  images: string[] | null;
+};
