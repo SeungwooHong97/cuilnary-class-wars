@@ -49,6 +49,8 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
     setMapLevel(map.getLevel());
   };
 
+  console.log("!!", restaurants);
+
   return (
     <div className="relative mt-[30px] mr-[20px]">
       <Map
