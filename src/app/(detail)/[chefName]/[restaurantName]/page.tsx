@@ -1,16 +1,8 @@
 import KakaoMap from "@/app/components/map/KakaoMap";
 import RestaurantDetail from "@/app/components/restaurantDetail/RestaurantDetail";
 import RestaurantHeader from "@/app/components/restaurantDetail/RestaurantHeader";
-
-import ReviewInput from "@/app/components/reviews/ReviewInput";
-import { ReviewList } from "@/app/components/reviews/ReviewList";
 import Reviews from "@/app/components/reviews/Reviews";
-
 import { supabase } from "@/lib/supabaseClient";
-import { Restaurant, Review } from "@/types/info";
-import Image from "next/image";
-import { describe } from "node:test";
-import { ContextType, useState } from "react";
 
 type Props = {
   params: { restaurantName: string };
