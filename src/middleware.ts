@@ -8,9 +8,12 @@ export async function middleware(request: NextRequest) {
 
   const serverClient = createClient();
 
+  /** auth 모듈이 회원가입과 동시에 자동으로 로그인 세션을 생성하고있어서 문제임 */
   const {
     data: { user }
   } = await serverClient.auth.getUser();
+
+  console.log("middleware user :>> ", user);
 
   const isLogin = !!user;
 

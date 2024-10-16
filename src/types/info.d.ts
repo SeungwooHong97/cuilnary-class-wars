@@ -9,7 +9,7 @@ export type User = {
 };
 export type Chef = {
   chef_class: string | null;
-  chef_img_url: string | null;
+  chef_img_url: string;
   chef_name: string;
   created_at: string;
   description: string | null;
