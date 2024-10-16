@@ -23,7 +23,6 @@ const chefDetail = ({ params }: Props) => {
     const decodedChefName = decodeURIComponent(params.chefName);
 
     const fetchData = async () => {
-      setLoading(true);
       const { data, error } = await supabase.from("chef").select("*, restaurant(*)").eq("chef_name", decodedChefName);
 
       if (error) {
