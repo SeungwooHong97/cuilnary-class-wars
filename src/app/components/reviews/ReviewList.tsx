@@ -141,7 +141,7 @@ export const ReviewList = ({
         return (
           <div key={review.id}>
             {editIndex === index ? (
-              <div>
+              <div className="">
                 <select name="" id="" onChange={starDataFunc} value={star}>
                   <option value="0">별점을 추가해주세요</option>
                   <option value="1">⭐</option>
