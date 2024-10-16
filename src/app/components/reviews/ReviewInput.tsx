@@ -5,6 +5,7 @@ import { Restaurant, Review } from "@/types/info";
 
 import React, { SetStateAction, useState } from "react";
 import useAuthStore from "../../../../zustand/userStore";
+import { toast } from "react-toastify";
 
 const ReviewInput = ({
   rest,
@@ -21,15 +22,15 @@ const ReviewInput = ({
 
   const addComment = async () => {
     if (!userId) {
-      return alert("로그인시 댓글 작성이 가능합니다"), setComment(""), setStar("");
+      return toast.error("로그인시 댓글 작성이 가능합니다"), setComment(""), setStar("");
     }
 
     if (!comment) {
-      return alert("댓글을 입력해주세요");
+      return toast.error("댓글을 입력해주세요");
     }
 
     if (star === "0") {
-      return alert("별점을 입력해주세요");
+      return toast.error("별점을 입력해주세요");
     }
 
     const { error } = await supabase.from("reviews").insert({
@@ -46,11 +47,11 @@ const ReviewInput = ({
       .returns<Review[]>();
 
     if (error || !listData || listError) {
-      alert("댓글 등록을 실패하였습니다");
+      toast.error("댓글 등록을 실패하였습니다");
       throw new Error("댓글 등록을 실패하였습니다");
     } else {
       setReviews(listData);
-      alert("댓글 등록 성공!");
+      toast.success("댓글 등록 성공!");
       setComment("");
       setStar("0");
     }
