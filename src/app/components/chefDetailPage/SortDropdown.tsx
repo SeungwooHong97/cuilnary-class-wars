@@ -10,15 +10,16 @@ export default function SortDropdown({ restaurants, setSortedRestaurants }: Prop
     const sorted = [...restaurants].sort((a, b) => a.restaurant_name.localeCompare(b.restaurant_name));
     setSortedRestaurants(sorted);
   };
+
   const sortByStar = () => {
-    const sorted = [...restaurants].sort((a, b) => a.star - b.star);
+    const sorted = [...restaurants].sort((a, b) => b.star - a.star);
     setSortedRestaurants(sorted);
   };
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "hangul") {
       sortByHangul();
-    } else if (e.target.value === "review") {
+    } else if (e.target.value === "star") {
       sortByStar();
     } else {
       setSortedRestaurants(restaurants);
