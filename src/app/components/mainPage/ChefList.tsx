@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabaseClient";
 import ChefInfo from "./ChefInfo";
 import CategoryButton from "./CategoryButton";
 import { Chefs } from "../../../types/info";
+import Image from "next/image";
 
 const ChefList = () => {
   const [category, setCategory] = useState("백수저");
@@ -13,6 +14,8 @@ const ChefList = () => {
 
   const whiteScrollRef = useRef<HTMLHeadingElement | null>(null); // 백수저 ref
   const blackScrollRef = useRef<HTMLHeadingElement | null>(null); // 흑수저 ref
+
+  const topButton = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
     const getChefs = async () => {
@@ -43,9 +46,13 @@ const ChefList = () => {
     }
   };
 
+  const handleMoveScrollTop = () => {
+    topButton.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div>
-      <section className="flex justify-around mb-8">
+      <section className="flex justify-around mb-8" ref={topButton}>
         <CategoryButton onClick={handleMoveScroll} buttonType={"백수저"} category={category} />
         <CategoryButton onClick={handleMoveScroll} buttonType={"흑수저"} category={category} />
       </section>
@@ -60,6 +67,9 @@ const ChefList = () => {
         </h2>
         <ChefInfo chef={blackChef} />
       </section>
+      <button className="fixed bottom-10 right-10 rounded cursor-pointer" onClick={handleMoveScrollTop}>
+        <Image src={"/images/topButton.svg"} alt={"탑 버튼"} width={50} height={50} />
+      </button>
     </div>
   );
 };

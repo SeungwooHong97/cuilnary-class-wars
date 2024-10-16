@@ -56,25 +56,40 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-lvh gap-3">
-      <h2>Culinary War Store</h2>
-      <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col gap-5 w-6/12">
-        <input placeholder="이메일" {...register("email")} className="border-solid	border-2" />
-        {errors.email && <p>{String(errors.email.message)}</p>}
+    <div className="flex flex-col items-center justify-center h-lvh gap-6">
+      <h2 className="font-extrabold	text-3xl">Culinary War Store</h2>
+      <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col gap-5 w-96">
+        <input placeholder="이메일" {...register("email")} className="border-solid	border-2 h-12 pl-2  rounded-lg" />
+        {errors.email && <p className="text-red-500 text-sm pl-1">{String(errors.email.message)}</p>}
 
-        <input type="password" placeholder="비밀번호" {...register("password")} className="border-solid	border-2" />
-        {errors.password && <p>{String(errors.password.message)}</p>}
+        <input
+          type="password"
+          placeholder="비밀번호"
+          {...register("password")}
+          className="border-solid	border-2 h-12 pl-2  rounded-lg"
+        />
+        {errors.password && <p className="text-red-500 text-sm pl-1">{String(errors.password.message)}</p>}
 
-        <input type="text" placeholder="이름" {...register("name")} className="border-solid	border-2" />
-        {errors.name && <p>{String(errors.name.message)}</p>}
+        <input
+          type="text"
+          placeholder="이름"
+          {...register("name")}
+          className="border-solid	border-2 h-12 pl-2  rounded-lg"
+        />
+        {errors.name && <p className="text-red-500 text-sm pl-1">{String(errors.name.message)}</p>}
 
-        <input type="text" placeholder="닉네임" {...register("nickname")} className="border-solid	border-2" />
-        {errors.nickname && <p>{String(errors.nickname.message)}</p>}
+        <input
+          type="text"
+          placeholder="닉네임"
+          {...register("nickname")}
+          className="border-solid	border-2 h-12 pl-2  rounded-lg"
+        />
+        {errors.nickname && <p className="text-red-500 text-sm pl-1">{String(errors.nickname.message)}</p>}
 
         <button type="submit">회원가입</button>
       </form>
-      <p>
-        이미 계정이 있으신가요? <Link href={"/login"}>로그인</Link>{" "}
+      <p className="text-gray-500">
+        이미 계정이 있으신가요? <Link href={"/login"}>로그인 하러가기</Link>{" "}
       </p>
     </div>
   );

@@ -19,15 +19,15 @@ const Header = () => {
           홈
         </Link>
 
-        <Link href={"/myPage"} className="hover:underline font-bold">
-          마이 페이지
-        </Link>
         {isLoggedIn ? (
           <>
+            <Link href={"/myPage"} className="hover:underline font-bold">
+              마이 페이지
+            </Link>
             <button onClick={handleSignOut}>로그아웃</button>
           </>
         ) : (
-          <>
+          <div className="flex gap-10">
             <Link href={"/login"} className="hover:underline font-bold">
               로그인
             </Link>
@@ -35,7 +35,7 @@ const Header = () => {
             <Link href={"/signUp"} className="hover:underline font-bold">
               회원가입
             </Link>
-          </>
+          </div>
         )}
       </nav>
     </header>

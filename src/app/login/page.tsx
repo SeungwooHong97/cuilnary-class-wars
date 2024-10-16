@@ -8,6 +8,7 @@ import { User } from "../../types/info";
 import useAuthStore from "../../../zustand/userStore";
 import { supabase } from "@/lib/supabaseClient";
 import { getSession, login } from "@/utils/supabase/supabaseApi";
+import styles from "./login.module.css";
 
 const loginSchema = z.object({
   email: z.string(),
@@ -15,8 +16,7 @@ const loginSchema = z.object({
 });
 
 export default function LoginPage() {
-  const { nickname, setAccessToken, setUserId, setUserName, setNickname, setIsLoggedIn, setProfile_img } =
-    useAuthStore();
+  const { setAccessToken, setUserId, setUserName, setNickname, setIsLoggedIn, setProfile_img } = useAuthStore();
 
   const { register, handleSubmit } = useForm({
     mode: "onChange",
@@ -68,12 +68,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-lvh gap-3">
-      <h2>Culinary War Store</h2>
-      <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-5 w-6/12">
-        <input placeholder="이메일" {...register("email")} className="border-solid	border-2" />
-        <input type="password" placeholder="비밀번호" {...register("password")} className="border-solid	border-2" />
-        <button type="submit">로그인</button>
+    <div className="flex flex-col items-center justify-center h-lvh gap-6">
+      <h2 className="font-extrabold	text-3xl">Culinary War Store</h2>
+      <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-5 w-96">
+        <input placeholder="이메일" {...register("email")} className="border-solid	border-2 h-12 pl-2  rounded-lg" />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          {...register("password")}
+          className="border-solid	border-2 h-12 pl-2  rounded-lg"
+        />
+        <button type="submit" className="border-solid	border-2 h-12 pl-2 text-white	bg-black font-bold rounded-lg	">
+          로그인
+        </button>
       </form>
     </div>
   );

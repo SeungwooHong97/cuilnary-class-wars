@@ -31,14 +31,15 @@ const useAuthStore = create<AuthState>()(
         setUserId: (userId: string) => set({ userId }),
         setUserName: (userName: string) => set({ userName }),
         setNickname: (nickname: string) => set({ nickname }),
-        setIsLoggedIn: (isLoggedIn: boolean) => set({ isLoggedIn }),
         setProfile_img: (profile_img: string) => set({ profile_img }),
+        setIsLoggedIn: (isLoggedIn: boolean) => set({ isLoggedIn }),
         setClearAuth: () =>
           set({
             accessToken: "",
             userId: "",
             userName: "",
             nickname: "",
+            profile_img: "",
             isLoggedIn: false
           })
       };
