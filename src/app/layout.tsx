@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "./components/Header";
 import Script from "next/script";
 import ReactQueryProviders from "./utils/ReactQueryProvider";
+import { ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -46,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${pretendard.variable} antialiased`}>
+        <ToastContainer position="top-right" autoClose={1000} closeOnClick draggable transition={Bounce} />
         <ReactQueryProviders>
           <Script src={KAKAO_API_URL} strategy="beforeInteractive" />
           <Header />

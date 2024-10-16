@@ -5,6 +5,8 @@ import { User } from "../../../types/info";
 import useAuthStore from "../../../../zustand/userStore";
 import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // 사용자 정보 업데이트 함수
 const updateUserProfile = async (userId: string, nickname: string) => {
@@ -16,7 +18,7 @@ const updateUserProfile = async (userId: string, nickname: string) => {
   if (error) {
     throw new Error(error.message);
   } else {
-    alert("닉네임 변경 완료");
+    toast.success("닉네임이 변경되었습니다!.");
   }
 };
 
@@ -43,7 +45,7 @@ export default function Profile() {
           .single<User>();
 
         if (error) {
-          console.error("사용자 정보 가져오기 실패:", error);
+          toast.error("사용자의 정보를 가져오지 못했습니다.");
           return;
         }
 
@@ -55,19 +57,8 @@ export default function Profile() {
       };
 
       fetchUserData();
-    } 
-  }, []);
-
-  const trimmedProfileImg = profile_img.trim();
-
-  const isValidUrl = (url: string) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (error) {
-      return false;
     }
-  };
+  }, []);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>, userId: string) => {
     const file = e.target.files?.[0];
@@ -82,7 +73,7 @@ export default function Profile() {
       const { data, error } = await supabase.storage.from("user_profile").upload(filePath, file);
 
       if (error) {
-        console.error("이미지 업로드 오류:", error);
+        toast.error("프로필 업로드 시 오류가 발생했습니다.");
         return;
       }
 
@@ -97,7 +88,8 @@ export default function Profile() {
     const { error } = await supabase.from("user").update({ profile_img: imgUrl }).eq("id", userId);
 
     if (!error) {
-      alert("프로필 이미지 변경 완료");
+      // alert("프로필 이미지 변경 완료");
+      toast.success("프로필 변경이 완료되었습니다.");
     }
   };
 
