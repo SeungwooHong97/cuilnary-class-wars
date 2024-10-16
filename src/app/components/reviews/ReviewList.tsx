@@ -2,8 +2,7 @@
 
 import { supabase } from "@/lib/supabaseClient";
 import { Restaurant, Review } from "@/types/info";
-import React, { DetailedHTMLProps, InputHTMLAttributes, SetStateAction, useContext, useEffect, useState } from "react";
-import ReviewInput from "./ReviewInput";
+import React, {  SetStateAction, useEffect, useState } from "react";
 import useAuthStore from "../../../../zustand/userStore";
 
 // import { ReviewsContext } from "./ReviewsContext";
