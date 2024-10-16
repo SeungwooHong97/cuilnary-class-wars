@@ -4,7 +4,6 @@ import useAuthStore from "../../../../zustand/userStore";
 import { supabase } from "@/lib/supabaseClient";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from "next/image";
 import { CustomBookmark } from "@/types/info";
 
 export default function Bookmark() {
