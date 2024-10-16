@@ -1,3 +1,4 @@
+"use client";
 import { Restaurant } from "@/types/info";
 import Image from "next/image";
 import React, { useState } from "react";
