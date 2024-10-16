@@ -44,10 +44,10 @@ const ChefDetailPage = ({ params }: Props) => {
     return (
       <div className="flex sm:flex-col md:flex-row justify-center items-center min-h-[calc(100vh-72px)] bg-gray-50">
         <div className="flex-none items-center w-full md:w-[550px] mr-[20px]">
-          <div className="w-full md:w-[550px] h-[400px] md:h-[800px] rounded-r-lg bg-zinc-200 mt-[30px]" />
+          <div className="w-full md:w-[550px] h-[800px] rounded-r-lg bg-zinc-200 mt-[30px]" />
         </div>
         <div className="flex-grow">
-          <div className="mr-[20px] w-full h-[400px] md:h-[800px] bg-zinc-200 mt-[30px]" />
+          <div className="mr-[20px] w-full h-[800px] bg-zinc-200 mt-[30px]" />
         </div>
       </div>
     );
