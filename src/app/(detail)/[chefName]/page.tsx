@@ -53,7 +53,11 @@ const ChefDetailPage = ({ params }: Props) => {
           {chefData.chef_img_url ? null : <h1 className="text-lg font-bold my-[30px]">{chefData.chef_name}</h1>}
           <RestaurantList restaurants={restaurants} data={chefData} handleMoveToLocation={handleMoveToLocation} />
         </div>
-        <KakaoMap restaurants={restaurants} selectedLocation={selectedLocation} />
+        <KakaoMap
+          restaurants={restaurants}
+          selectedLocation={selectedLocation}
+          size={{ width: "1100px", height: "800px" }}
+        />
       </div>
     );
 };

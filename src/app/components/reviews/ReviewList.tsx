@@ -83,19 +83,19 @@ export const ReviewList = ({
   function reviewToStar(starNumber: string) {
     switch (starNumber) {
       case "1":
-        return "⭐";
+        return "⭐ 1점";
 
       case "2":
-        return "⭐⭐";
+        return "⭐⭐ 2점";
 
       case "3":
-        return "⭐⭐⭐";
+        return "⭐⭐⭐ 3점";
 
       case "4":
-        return "⭐⭐⭐⭐";
+        return "⭐⭐⭐⭐ 4점";
 
       case "5":
-        return "⭐⭐⭐⭐⭐";
+        return "⭐⭐⭐⭐⭐ 5점";
     }
   }
 
@@ -123,11 +123,20 @@ export const ReviewList = ({
   };
 
   return (
-    <div>
-      <button onClick={sortRecent}>최신순</button>
-      <button onClick={sortScore}>별점순</button>
-      <p>댓글수: {reviews.length}</p>
-      <p>평점: {average}</p>
+    <div className="bg-stone-200 mt-10 rounded-lg p-4">
+      <div className="flex gap-5  border-black border-b text-xl font-bold">
+        <p>댓글수: {reviews.length}개</p>
+        <p>평점: {average}점</p>
+      </div>
+      <div className=" flex float-right text-lg font-bold">
+        <button className="m-4 " onClick={sortRecent}>
+          ⏱️ 최신순
+        </button>
+        <button className="mr-8" onClick={sortScore}>
+          ⭐ 별점순
+        </button>
+      </div>
+
       {reviews.map((review, index) => {
         return (
           <div key={review.id}>
@@ -153,12 +162,15 @@ export const ReviewList = ({
                 <button onClick={() => setEditIndex(null)}>취소</button>
               </div>
             ) : (
-              <div>
-                <p>{nickname}</p>
-                <p>{reviewToStar(review.star!)}</p>
+              <div className=" mt-20 ">
+                <div className="flex gap-2 border-t border-zinc-400">
+                  <p className="font-medium">{nickname}</p>
+                  <p>{reviewToStar(review.star!)}</p>
+                </div>
                 <p>{review.review_content}</p>
               </div>
             )}
+
             {userId === review.user_id && (
               <button
                 onClick={() => {
