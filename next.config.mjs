@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  //   reactStrictMode: false,
+  // reactStrictMode: false,
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ["@svgr/webpack"]
+    });
+    return config;
+  },
   images: {
     domains: [
       "ugc-images.catchtable.co.kr",
@@ -11,4 +19,4 @@ const nextConfig = {
   }
 };
 
-export default nextConfig;
+export default nextConfig; // ES 모듈 방식으로 내보내기
