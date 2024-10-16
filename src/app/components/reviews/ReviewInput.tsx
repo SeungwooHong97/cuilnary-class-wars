@@ -9,9 +9,11 @@ import { toast } from "react-toastify";
 
 const ReviewInput = ({
   rest,
+  reviews,
   setReviews
 }: {
   rest: Restaurant;
+  reviews: Review[];
   setReviews: React.Dispatch<SetStateAction<Review[]>>;
 }) => {
   const { userId } = useAuthStore();
@@ -40,13 +42,20 @@ const ReviewInput = ({
       star: star
     });
 
+    const { error: addStarError } = await supabase
+      .from("restaurant")
+      .update({
+        star: Number(star) + Number(rest.star) / reviews.length
+      })
+      .eq("restaurant_name", rest.restaurant_name);
+
     const { data: listData, error: listError } = await supabase
       .from("reviews")
       .select()
       .eq("restaurant_id", rest.id)
       .returns<Review[]>();
 
-    if (error || !listData || listError) {
+    if (error || !listData || listError || addStarError) {
       toast.error("댓글 등록을 실패하였습니다");
       throw new Error("댓글 등록을 실패하였습니다");
     } else {

@@ -13,20 +13,10 @@ type Props = {
   params: { restaurantName: string };
 };
 
-const RestaurantDetail = async ({ rest }: { rest: Restaurant }) => {
-  const { data, error } = await supabase.from("restaurant").select().eq("restaurant_name", rest.restaurant_name);
-
-  if (error) {
-    console.error("Error:", error.message);
-    throw new Error("데이터를 가져오는 데 실패했습니다.");
-  }
-
-  const restDetail = data[0];
-
-  console.log("restDetail", restDetail);
-
+const RestaurantDetail = ({ rest }: { rest: Restaurant }) => {
   const { userId, isLoggedIn } = useAuthStore();
   const [isLiked, setIsLiked] = useState(false);
+  const [restDetail, setRestDetail] = useState<Restaurant>();
 
   const handleLikeClick = async () => {
     if (isLiked) {
@@ -51,6 +41,21 @@ const RestaurantDetail = async ({ rest }: { rest: Restaurant }) => {
   };
 
   useEffect(() => {
+    const fetchRestaurant = async () => {
+      const { data, error } = await supabase.from("restaurant").select().eq("restaurant_name", rest.restaurant_name);
+
+      if (error) {
+        console.error("Error:", error.message);
+        throw new Error("데이터를 가져오는 데 실패했습니다.");
+      }
+
+      const restDetail: Restaurant = data[0];
+
+      setRestDetail(restDetail);
+    };
+    fetchRestaurant();
+    console.log("이거", restDetail);
+
     const getLiked = async () => {
       if (!userId || !rest.id) {
         console.error("userId or restaurant_id is not valid");
@@ -79,7 +84,7 @@ const RestaurantDetail = async ({ rest }: { rest: Restaurant }) => {
 
   return (
     <div>
-      {restDetail.restaurant_img_url.images.map((img: string) => {
+      {restDetail?.restaurant_img_url?.images.map((img: string) => {
         return <Image key={img} src={img} alt="이미지 없음" width={250} height={250} />;
       })}
       <h2>{rest.restaurant_name}</h2>
