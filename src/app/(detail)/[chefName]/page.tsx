@@ -1,9 +1,8 @@
 "use client";
-import RestaurantList from "@/app/components/chefDetailPage/RestaurantList";
+import ChefDetail from "@/app/components/chefDetailPage/ChefDetail";
 import KakaoMap from "@/app/components/map/KakaoMap";
 import { supabase } from "@/lib/supabaseClient";
 import { Chefs, Restaurant } from "@/types/info";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -14,6 +13,7 @@ const chefDetail = ({ params }: Props) => {
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [chefData, setChefData] = useState<Chefs | null>(null);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handleMoveToLocation = (lat: number, lng: number) => {
     setSelectedLocation({ lat, lng });
@@ -23,6 +23,7 @@ const chefDetail = ({ params }: Props) => {
     const decodedChefName = decodeURIComponent(params.chefName);
 
     const fetchData = async () => {
+      setLoading(true);
       const { data, error } = await supabase.from("chef").select("*, restaurant(*)").eq("chef_name", decodedChefName);
 
       if (error) {
@@ -32,19 +33,25 @@ const chefDetail = ({ params }: Props) => {
 
       setChefData(data[0]);
       setRestaurants(data[0].restaurant);
+      setLoading(false);
     };
 
     fetchData();
   }, [params.chefName]);
 
+  if (loading) {
+    return (
+      <div className="flex justify-between items-center min-h-[calc(100vh-56px)] bg-gray-50">
+        <div className="w-[550px] h-[800px] rounded-r-lg bg-zinc-200" />
+        <div className="mr-[20px] w-[1100px] h-[800px] bg-zinc-200" />
+      </div>
+    );
+  }
+
   if (chefData && restaurants)
     return (
       <div className="flex justify-between items-center min-h-[calc(100vh-56px)] bg-gray-50">
-        <div className="flex flex-col justify-center items-center w-[550px] h-[800px] shadow-lg rounded-r-lg  gap-6 bg-[#ffffff]">
-          <Image src={chefData.chef_img_url} alt={chefData.chef_name} width={480} height={261} objectFit="cover" />
-          {chefData.chef_img_url ? null : <h1 className="text-lg font-bold my-[30px]">{chefData.chef_name}</h1>}
-          <RestaurantList restaurants={restaurants} data={chefData} handleMoveToLocation={handleMoveToLocation} />
-        </div>
+        <ChefDetail chefData={chefData} restaurants={restaurants} handleMoveToLocation={handleMoveToLocation} />
         <div className="mr-[20px]">
           <KakaoMap restaurants={restaurants} selectedLocation={selectedLocation} />
         </div>
