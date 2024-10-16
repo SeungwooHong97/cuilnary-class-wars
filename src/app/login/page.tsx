@@ -8,7 +8,6 @@ import { User } from "../../types/info";
 import useAuthStore from "../../../zustand/userStore";
 import { supabase } from "@/lib/supabaseClient";
 import { getSession, login } from "@/utils/supabase/supabaseApi";
-import styles from "./login.module.css";
 
 const loginSchema = z.object({
   email: z.string(),
