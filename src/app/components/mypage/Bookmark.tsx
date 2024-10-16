@@ -39,7 +39,7 @@ export default function Bookmark() {
         console.error("Error fetching bookmarks:", error);
         toast.error("북마크 데이터를 불러오는데 실패했습니다.");
       } else if (data) {
-        setBookmarks(data);
+        // setBookmarks(data);
         // console.log(bookmarks[0].restaurant);
       }
     };
