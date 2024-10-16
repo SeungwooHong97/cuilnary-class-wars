@@ -23,6 +23,7 @@ export type Restaurant = {
   latitude: string | null;
   longitude: string | null;
   star: number | null;
+  chef_name: string | null;
   restaurant_img_url: { images: string[] } | null;
 };
 
@@ -36,7 +37,7 @@ export type Review = {
   id: string;
   restaurant_id: string | null;
   review_content: string | null;
-  star: string | null;
+  star: string;
   user_id: string | null;
   created_at: string | null;
 };
@@ -58,6 +59,3 @@ export type CustomRestaurant = {
   restaurant_img_url: CustomImage;
 };
 
-export type CustomImage = {
-  images: string[] | null;
-};

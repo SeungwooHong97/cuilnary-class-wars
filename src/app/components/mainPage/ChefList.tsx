@@ -8,7 +8,6 @@ import { Chefs } from "../../../types/info";
 import Image from "next/image";
 
 const ChefList = () => {
-  const [category, setCategory] = useState("백수저");
   const [whiteChef, setWhiteChef] = useState<Chefs[]>([]);
   const [blackChef, setBlackChef] = useState<Chefs[]>([]);
 
@@ -37,8 +36,6 @@ const ChefList = () => {
   }, []);
 
   const handleMoveScroll = (buttonType: string) => {
-    setCategory(buttonType);
-
     if (buttonType === "백수저") {
       whiteScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     } else if (buttonType === "흑수저") {
@@ -53,8 +50,8 @@ const ChefList = () => {
   return (
     <div>
       <section className="flex justify-around mb-8" ref={topButton}>
-        <CategoryButton onClick={handleMoveScroll} buttonType={"백수저"} category={category} />
-        <CategoryButton onClick={handleMoveScroll} buttonType={"흑수저"} category={category} />
+        <CategoryButton onClick={handleMoveScroll} buttonType={"백수저"} />
+        <CategoryButton onClick={handleMoveScroll} buttonType={"흑수저"} />
       </section>
       <section>
         <h2 className="text-2xl font-bold text-center mb-4" ref={whiteScrollRef}>
