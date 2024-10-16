@@ -2,8 +2,9 @@
 
 import { Restaurant, Review } from "@/types/info";
 import React, { useState } from "react";
-import ReviewInput from "./ReviewInput";
+
 import { ReviewList } from "./ReviewList";
+import ReviewInput from "./ReviewInput";
 
 const Reviews = ({ rest }: { rest: Restaurant }) => {
   const [reviews, setReviews] = useState<Review[]>([]);

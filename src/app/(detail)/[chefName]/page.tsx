@@ -1,4 +1,5 @@
 "use client";
+import ChefDetail from "@/app/components/chefDetailPage/ChefDetail";
 import RestaurantList from "@/app/components/chefDetailPage/RestaurantList";
 import KakaoMap from "@/app/components/map/KakaoMap";
 import { supabase } from "@/lib/supabaseClient";
@@ -14,6 +15,7 @@ const ChefDetailPage = ({ params }: Props) => {
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [chefData, setChefData] = useState<Chefs | null>(null);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handleMoveToLocation = (lat: number, lng: number) => {
     setSelectedLocation({ lat, lng });
@@ -32,32 +34,38 @@ const ChefDetailPage = ({ params }: Props) => {
 
       setChefData(data[0]);
       setRestaurants(data[0].restaurant);
+      setLoading(false);
     };
 
     fetchData();
   }, [params.chefName]);
 
+  if (loading) {
+    return (
+      <div className="flex sm:flex-col md:flex-row justify-center items-center min-h-[calc(100vh-72px)] bg-gray-50">
+        <div className="flex-none items-center w-full md:w-[550px] mr-[20px]">
+          <div className="w-full md:w-[550px] h-[800px] rounded-r-lg bg-zinc-200 mt-[30px]" />
+        </div>
+        <div className="flex-grow">
+          <div className="mr-[20px] w-full h-[800px] bg-zinc-200 mt-[30px]" />
+        </div>
+      </div>
+    );
+  }
+
   if (chefData)
     return (
-      <div className="flex justify-around items-center min-h-[calc(100vh-56px)]">
-        <div className="flex flex-col justify-center items-center gap-[30px] w-[800px]">
-          <Image
-            src={
-              chefData.chef_img_url ??
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8-VorlNYtHd0lxv9dRjs7a9PKdWuEEkXkbg&s"
-            }
-            alt={chefData.chef_name}
-            width={413}
-            height={261}
-          />
-          {chefData.chef_img_url ? null : <h1 className="text-lg font-bold my-[30px]">{chefData.chef_name}</h1>}
-          <RestaurantList restaurants={restaurants} data={chefData} handleMoveToLocation={handleMoveToLocation} />
+      <div className="flex sm:flex-col md:flex-row justify-center items-center min-h-[calc(100vh-72px)] bg-gray-50">
+        <div className="flex-none items-center w-full md:w-[550px] mr-[20px]">
+          <ChefDetail chefData={chefData} restaurants={restaurants} handleMoveToLocation={handleMoveToLocation} />
         </div>
-        <KakaoMap
-          restaurants={restaurants}
-          selectedLocation={selectedLocation}
-          size={{ width: "1100px", height: "800px" }}
-        />
+        <div className="flex-grow">
+          <KakaoMap
+            restaurants={restaurants}
+            selectedLocation={selectedLocation}
+            size={{ width: "100%", height: "800px" }}
+          />
+        </div>
       </div>
     );
 };
