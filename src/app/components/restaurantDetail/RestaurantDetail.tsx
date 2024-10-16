@@ -9,10 +9,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-type Props = {
-  params: { restaurantName: string };
-};
-
 const RestaurantDetail = ({ rest }: { rest: Restaurant }) => {
   const { userId, isLoggedIn } = useAuthStore();
   const [isLiked, setIsLiked] = useState(false);
@@ -54,10 +50,9 @@ const RestaurantDetail = ({ rest }: { rest: Restaurant }) => {
       setRestDetail(restDetail);
     };
     fetchRestaurant();
-    console.log("이거", restDetail);
 
     const getLiked = async () => {
-      if (!userId || !rest.id) {
+      if (!userId || !restDetail?.id) {
         console.error("userId or restaurant_id is not valid");
         return; // 유효하지 않은 경우 함수를 종료합니다.
       }

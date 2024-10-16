@@ -70,7 +70,7 @@ export default function Profile() {
       await supabase.storage.from("user_profile").remove([filePath]);
 
       // 새 파일 업로드
-      const { data, error } = await supabase.storage.from("user_profile").upload(filePath, file);
+      const { error } = await supabase.storage.from("user_profile").upload(filePath, file);
 
       if (error) {
         toast.error("프로필 업로드 시 오류가 발생했습니다.");

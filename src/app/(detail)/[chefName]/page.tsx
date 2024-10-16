@@ -10,7 +10,7 @@ type Props = {
   params: { chefName: string };
 };
 
-const chefDetail = ({ params }: Props) => {
+const ChefDetailPage = ({ params }: Props) => {
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [chefData, setChefData] = useState<Chefs | null>(null);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -58,4 +58,4 @@ const chefDetail = ({ params }: Props) => {
     );
 };
 
-export default chefDetail;
+export default ChefDetailPage;
