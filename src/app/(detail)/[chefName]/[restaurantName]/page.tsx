@@ -26,7 +26,7 @@ const restaurantDetail = async ({ params }: Props) => {
   }
 
   const restaurantDetail = data[0];
-  console.log("이거이거", restaurantDetail);
+
   return (
     <div>
       <div>
