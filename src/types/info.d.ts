@@ -37,7 +37,7 @@ export type Review = {
   id: string;
   restaurant_id: string | null;
   review_content: string | null;
-  star: string | null;
+  star: string;
   user_id: string | null;
   created_at: string | null;
 };
@@ -58,4 +58,3 @@ export type CustomRestaurant = {
   star: number | null;
   restaurant_img_url: { images: string[] } | null;
 };
-
