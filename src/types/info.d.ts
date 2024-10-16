@@ -22,7 +22,7 @@ export type Restaurant = {
   description: string | null;
   latitude: string | null;
   longitude: string | null;
-  star: number | null;
+  star: number;
   chef_name: string | null;
   restaurant_img_url: { images: string[] } | null;
 };
@@ -55,6 +55,6 @@ export type CustomRestaurant = {
   chef_name: string | null;
   restaurant_name: string;
   description: string | null;
-  star: number | null;
+  star: number;
   restaurant_img_url: { images: string[] } | null;
 };
