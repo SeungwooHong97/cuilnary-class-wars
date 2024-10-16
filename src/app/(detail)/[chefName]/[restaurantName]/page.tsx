@@ -32,7 +32,7 @@ const restaurantDetail = async ({ params }: Props) => {
       <div>
         <RestaurantHeader rest={restaurantDetail} />
         <RestaurantDetail rest={restaurantDetail} />
-        <KakaoMap restaurants={data} selectedLocation={null} />
+        <KakaoMap restaurants={data} selectedLocation={null} size={{ width: "600px", height: "400px" }} />
       </div>
       <Reviews rest={restaurantDetail} />
     </div>
