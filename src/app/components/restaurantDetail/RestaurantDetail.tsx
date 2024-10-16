@@ -18,7 +18,7 @@ const RestaurantDetail = ({ rest }: { rest: Restaurant }) => {
         <p className="mb-4 pl-2">{rest.description}</p>
         <p>📍 {rest.address}</p>
       </div>
-      <Heart rest = {rest}></Heart>
+      <Heart rest={rest}></Heart>
     </div>
   );
 };

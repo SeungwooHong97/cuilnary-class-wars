@@ -28,9 +28,9 @@ const restaurantDetail = async ({ params }: Props) => {
   const restaurantDetail = data[0];
 
   return (
-    <div>
-      <div>
-        <RestaurantHeader rest={restaurantDetail} />
+    <div className="mt-20 w-full h-full">
+      <RestaurantHeader rest={restaurantDetail} />
+      <div className="flex px-8 gap-5 mb-14">
         <RestaurantDetail rest={restaurantDetail} />
         <KakaoMap restaurants={data} selectedLocation={null} size={{ width: "600px", height: "400px" }} />
       </div>
