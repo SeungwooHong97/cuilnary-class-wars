@@ -40,20 +40,18 @@ const chefDetail = ({ params }: Props) => {
 
   if (loading) {
     return (
-      <div className="flex justify-between items-center min-h-[calc(100vh-56px)] bg-gray-50">
-        <div className="w-[550px] h-[800px] rounded-r-lg bg-zinc-200" />
-        <div className="mr-[20px] w-[1100px] h-[800px] bg-zinc-200" />
+      <div className="flex justify-between items-center min-h-[calc(100vh-72px)] bg-gray-50">
+        <div className="w-[550px] h-[800px] rounded-r-lg bg-zinc-200 mt-[30px]" />
+        <div className="mr-[20px] w-[1100px] h-[800px] bg-zinc-200 mt-[30px]" />
       </div>
     );
   }
 
   if (chefData && restaurants)
     return (
-      <div className="flex justify-between items-center min-h-[calc(100vh-56px)] bg-gray-50">
+      <div className="flex justify-center items-center min-h-[calc(100vh-72px)] bg-gray-50">
         <ChefDetail chefData={chefData} restaurants={restaurants} handleMoveToLocation={handleMoveToLocation} />
-        <div className="mr-[20px]">
-          <KakaoMap restaurants={restaurants} selectedLocation={selectedLocation} />
-        </div>
+        <KakaoMap restaurants={restaurants} selectedLocation={selectedLocation} />
       </div>
     );
 };
