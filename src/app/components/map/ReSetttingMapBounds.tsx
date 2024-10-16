@@ -28,7 +28,12 @@ export default function ReSetttingMapBounds({
 
   return (
     <>
-      <button onClick={() => map.setBounds(bounds)}>재설정</button>
+      <img
+        src="/images/restaurant_default.png"
+        alt="위치 재설정"
+        className="w-[60px] h-[60px] object-cover rounded-full cursor-pointer transition-transform transform hover:scale-105"
+        onClick={() => map.setBounds(bounds)}
+      />
     </>
   );
 }

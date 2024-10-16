@@ -32,10 +32,10 @@ export default function RestaurantList({ restaurants, data, handleMoveToLocation
         type="text"
         value={restaurant}
         onChange={(e) => setRestaurant(e.target.value)}
-        className="border p-2 w-[300px] mb-4"
+        placeholder="레스토랑 검색"
+        className="border border-gray-400 rounded-lg p-3 w-[300px] h-[40px] mb-4 bg-white text-black focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-shadow shadow-sm"
       />
-      <button></button>
-      <div className="flex flex-col gap-[30px] h-[500px] w-[600px] p-[20px] overflow-y-auto">
+      <div className="flex flex-col gap-[30px] h-[500px] w-[480px] p-[20px] overflow-y-auto">
         {filteredRestaurants.length > 0 ? (
           filteredRestaurants.map((rest) => {
             return <RestaurantCard key={rest.id} rest={rest} data={data} handleMoveToLocation={handleMoveToLocation} />;

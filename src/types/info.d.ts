@@ -9,7 +9,7 @@ export type User = {
 };
 export type Chef = {
   chef_class: string | null;
-  chef_img_url: string | null;
+  chef_img_url: string;
   chef_name: string;
   created_at: string;
   description: string | null;
@@ -24,10 +24,11 @@ export type Restaurant = {
   longitude: string | null;
   star: number | null;
   chef_name: string | null;
-  restaurant_img_url: string | null;
+  restaurant_img_url: { images: string[] } | null;
 };
+
 export type Bookmark = {
-  id: number;
+  id: string;
   restaurant_id: string | null;
   user_id: string | null;
 };

@@ -25,6 +25,7 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
 
   const mapRef = useRef<any>(null); // 지도 인스턴스 저장
 
+  // 위도 경도 있는 식당들만 (null 처리)
   useEffect(() => {
     const newPoints = restaurants
       .filter((rest) => rest.latitude && rest.longitude)
@@ -35,11 +36,12 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
     setPoints(newPoints);
   }, [restaurants]);
 
+  // 위치 이동 버튼 클릭 시 -> 이동 (선택한 식당 위치)
   useEffect(() => {
     if (selectedLocation && mapRef.current) {
       const newCenter = new kakao.maps.LatLng(selectedLocation.lat, selectedLocation.lng);
-      mapRef.current.setCenter(newCenter); // 지도 인스턴스 통해 중심 설정
       mapRef.current.setLevel(3);
+      mapRef.current.setCenter(newCenter);
     }
   }, [selectedLocation]);
 
@@ -48,11 +50,11 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
   };
 
   return (
-    <>
+    <div className="relative mt-[30px] mr-[20px]">
       <Map
         id="map"
         center={{ lat: 36.463648328911795, lng: 128.17089555281063 }}
-        style={{ width: "800px", height: "800px" }}
+        style={{ width: "1100px", height: "800px" }}
         level={13}
         onZoomChanged={handleZommChanged}
         ref={mapRef}
@@ -73,8 +75,12 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
             )}
           </div>
         ))}
-        {points.length > 0 && <ReSetttingMapBounds points={points} />}
+        {points.length > 0 && (
+          <div className="absolute bottom-5 right-5 z-10">
+            <ReSetttingMapBounds points={points} />
+          </div>
+        )}
       </Map>
-    </>
+    </div>
   );
 }
