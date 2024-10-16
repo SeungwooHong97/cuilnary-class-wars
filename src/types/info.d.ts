@@ -16,7 +16,7 @@ export type Chef = {
   id: string;
 };
 export type Restaurant = {
-  id: string;
+  id: string | null;
   restaurant_name: string;
   address: string | null;
   description: string | null;
@@ -44,3 +44,17 @@ export type Review = {
 export type Chefs = Chef & {
   restaurant: Restaurant[];
 };
+
+export type CustomBookmark = {
+  id: string;
+  restaurant: CustomRestaurant;
+};
+
+export type CustomRestaurant = {
+  chef_name: string | null;
+  restaurant_name: string;
+  description: string | null;
+  star: number | null;
+  restaurant_img_url: { images: string[] } | null;
+};
+

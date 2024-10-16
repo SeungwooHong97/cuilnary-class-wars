@@ -101,6 +101,19 @@ export default function Profile() {
 
   return (
     <div className="flex items-center justify-center">
+      <div className="relative w-[200px] h-[200px] mr-12	 rounded-full overflow-hidden">
+        <Image
+          src={
+            profile_img ||
+            "https://mjhcmaqftsbfevquhyqc.supabase.co/storage/v1/object/sign/user_profile/default_img.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ1c2VyX3Byb2ZpbGUvZGVmYXVsdF9pbWcucG5nIiwiaWF0IjoxNzI4OTMzOTg3LCJleHAiOjE3NjA0Njk5ODd9.zkJMRvGI8vpWKsR1c5nskb88fibWo_uM_lzQJzfZVbk&t=2024-10-14T19%3A26%3A28.430Z"
+          }
+          alt="user avatar"
+          layout="fill"
+          objectFit="cover"
+          className="rounded-full"
+        />
+      </div>
+
       <div className="flex flex-col justify-center">
         <h1 className="text-5xl mb-5">
           <span className="text-gray-500 font-bold">{nickname || "익명의 사용자"}님,</span>
@@ -150,19 +163,6 @@ export default function Profile() {
             </h2>
           </div>
         )}
-      </div>
-
-      <div className="relative w-[200px] h-[200px] rounded-full overflow-hidden ml-10">
-        <Image
-          src={
-            profile_img ||
-            "https://mjhcmaqftsbfevquhyqc.supabase.co/storage/v1/object/sign/user_profile/default_img.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ1c2VyX3Byb2ZpbGUvZGVmYXVsdF9pbWcucG5nIiwiaWF0IjoxNzI4OTMzOTg3LCJleHAiOjE3NjA0Njk5ODd9.zkJMRvGI8vpWKsR1c5nskb88fibWo_uM_lzQJzfZVbk&t=2024-10-14T19%3A26%3A28.430Z"
-          }
-          alt="user avatar"
-          layout="fill"
-          objectFit="cover"
-          className="rounded-full"
-        />
       </div>
     </div>
   );
