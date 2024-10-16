@@ -69,7 +69,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-lvh gap-6">
-      <h2 className="font-extrabold	text-3xl">Culinary War Store</h2>
+      <h2 className="font-extrabold	text-3xl text-gray-500">환영합니다!</h2>
       <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-5 w-96">
         <input placeholder="이메일" {...register("email")} className="border-solid	border-2 h-12 pl-2  rounded-lg" />
         <input
