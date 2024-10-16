@@ -9,8 +9,8 @@ import ReviewInput from "./ReviewInput";
 const Reviews = ({ rest }: { rest: Restaurant }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   return (
-    <div>
-      <ReviewInput rest={rest}  reviews={reviews} setReviews={setReviews} />
+    <div className=" m-10">
+      <ReviewInput rest={rest} reviews={reviews} setReviews={setReviews} />
       <ReviewList rest={rest} reviews={reviews} setReviews={setReviews} />
     </div>
   );
