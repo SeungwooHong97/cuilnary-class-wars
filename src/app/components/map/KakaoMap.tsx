@@ -10,9 +10,10 @@ import ZoomOverlay from "./ZoomOverlay";
 type Props = {
   restaurants: Restaurant[];
   selectedLocation: { lat: number; lng: number } | null;
+  size: { width: string; height: string };
 };
 
-export default function KakaoMap({ restaurants, selectedLocation }: Props) {
+export default function KakaoMap({ restaurants, selectedLocation, size }: Props) {
   const [points, setPoints] = useState<
     {
       lat: number;
@@ -56,7 +57,7 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
       <Map
         id="map"
         center={{ lat: 36.463648328911795, lng: 128.17089555281063 }}
-        style={{ width: "1100px", height: "800px" }}
+        style={{ width: size.width, height: size.height }}
         level={13}
         onZoomChanged={handleZommChanged}
         ref={mapRef}
