@@ -2,8 +2,9 @@
 
 import { supabase } from "@/lib/supabaseClient";
 import { Restaurant, Review } from "@/types/info";
-import useAuthStore from "@/userStore";
+
 import React, { SetStateAction, useState } from "react";
+import useAuthStore from "../../../../zustand/userStore";
 
 const ReviewInput = ({
   rest,
@@ -16,7 +17,7 @@ const ReviewInput = ({
   console.log(userId);
 
   const [comment, setComment] = useState<string>("");
-  const [star, setStar] = useState<string>("");
+  const [star, setStar] = useState<string>("0");
 
   const addComment = async () => {
     if (!userId) {
@@ -26,11 +27,12 @@ const ReviewInput = ({
     if (!comment) {
       return alert("댓글을 입력해주세요");
     }
-    // if (!star) {
-    //   return alert("별점을 입력해주세요");
-    // }
 
-    const { data, error } = await supabase.from("reviews").insert({
+    if (star === "0") {
+      return alert("별점을 입력해주세요");
+    }
+
+    const { error } = await supabase.from("reviews").insert({
       user_id: userId,
       restaurant_id: rest.id,
       review_content: comment,
@@ -50,7 +52,7 @@ const ReviewInput = ({
       setReviews(listData);
       alert("댓글 등록 성공!");
       setComment("");
-      setStar("1");
+      setStar("0");
     }
   };
 
@@ -60,14 +62,6 @@ const ReviewInput = ({
 
   return (
     <div>
-      {/* <input
-        type="text"
-        placeholder="평점을 남겨주세요"
-        value={star}
-        onChange={(e) => {
-          setStar(e.target.value);
-        }}
-      /> */}
       <input
         type="text"
         placeholder="댓글을 남겨주세요"
@@ -77,6 +71,7 @@ const ReviewInput = ({
         }}
       />
       <select name="" id="" onChange={starDataFunc} value={star}>
+        <option value="0">별점을 추가해주세요</option>
         <option value="1">⭐</option>
         <option value="2">⭐⭐</option>
         <option value="3">⭐⭐⭐</option>
