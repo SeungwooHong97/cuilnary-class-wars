@@ -50,7 +50,7 @@ export default function KakaoMap({ restaurants, selectedLocation }: Props) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative mt-[30px] mr-[20px]">
       <Map
         id="map"
         center={{ lat: 36.463648328911795, lng: 128.17089555281063 }}

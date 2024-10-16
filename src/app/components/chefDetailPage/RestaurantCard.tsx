@@ -12,10 +12,8 @@ const RestaurantCard = ({ rest, data, handleMoveToLocation }: Props) => {
   const imageUrl = rest.restaurant_img_url?.images?.[0] ?? "/images/restaurant_default.png";
 
   return (
-    <div className="relative flex items-center p-4 bg-white rounded-lg border border-gray-300 transition-shadow hover:shadow-md">
-      <div className="flex-shrink-0">
-        <Image src={imageUrl} alt={data.chef_name} width={80} height={80} className="rounded-lg" />
-      </div>
+    <div className="relative flex items-center p-3 bg-white rounded-lg border border-gray-300 transition-shadow hover:shadow-md">
+      <Image src={imageUrl} alt={data.chef_name} width={80} height={80} className="rounded-lg" />
 
       <div className="flex flex-col ml-4">
         <Link
@@ -27,9 +25,9 @@ const RestaurantCard = ({ rest, data, handleMoveToLocation }: Props) => {
         <div className="flex flex-col gap-[3px]">
           <div className="mt-1 text-gray-600 flex items-center gap-[10px]">
             <p className="font-bold text-sm">⭐{rest.star}</p>
-            <p className="text-sm">{rest.description ?? "정보 없음"}</p>
+            <p className="text-[13px]">{rest.description ?? "정보 없음"}</p>
           </div>
-          <p className="text-sm text-gray-500">{rest.address?.split(" ").slice(0, 2).join(" ")}</p>
+          <p className="text-[13px] text-gray-500">{rest.address?.split(" ").slice(0, 2).join(" ")}</p>
         </div>
       </div>
 
