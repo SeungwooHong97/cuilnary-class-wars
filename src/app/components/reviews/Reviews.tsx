@@ -7,11 +7,12 @@ import { ReviewList } from "./ReviewList";
 import ReviewInput from "./ReviewInput";
 
 const Reviews = ({ rest }: { rest: Restaurant }) => {
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewList, setReviewList] = useState<Review[]>([]);
+
   return (
     <div className=" m-10">
-      <ReviewInput rest={rest} reviews={reviews} setReviews={setReviews} />
-      <ReviewList rest={rest} reviews={reviews} setReviews={setReviews} />
+      <ReviewInput rest={rest} reviewList={reviewList} setReviewList={setReviewList} />
+      <ReviewList rest={rest} reviewList={reviewList} setReviewList={setReviewList} />
     </div>
   );
 };
