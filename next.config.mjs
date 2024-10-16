@@ -23,7 +23,8 @@ const nextConfig = {
       "ugc-images.catchtable.co.kr",
       "encrypted-tbn0.gstatic.com",
       "mjhcmaqftsbfevquhyqc.supabase.co",
-      "img1.kakaocdn.net"
+      "img1.kakaocdn.net",
+      "openweathermap.org"
     ]
   }
 };
