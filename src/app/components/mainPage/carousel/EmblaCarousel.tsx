@@ -31,8 +31,8 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         <div className="embla__container">
           {slides.map((slide, index) => (
             <div className="embla__slide" key={index}>
-              <div className="relative w-full h-[650px] overflow-hidden">
-                <Image src={slide} alt={`메인 이미지 ${index + 1}`} fill objectFit="cover" />
+              <div className="relative w-full h-[650px] overflow-hidden bg-black">
+                <Image src={slide} alt={`메인 이미지 ${index + 1}`} fill objectFit="contain" />
               </div>
             </div>
           ))}
