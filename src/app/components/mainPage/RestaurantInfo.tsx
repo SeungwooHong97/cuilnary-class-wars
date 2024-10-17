@@ -23,12 +23,12 @@ const RestaurantInfo = ({ restaurant, chefName }: RestaurantPropsType) => {
                 <Image
                   src={restaurant?.restaurant_img_url?.images?.[0] ?? "/images/restaurant_default.png"}
                   alt={chefName}
-                  layout="fill" // 부모의 크기에 맞춰 이미지를 채움
-                  objectFit="cover" // 이미지 비율을 유지하면서 부모 크기에 맞게 자르기
+                  fill
+                  style={{ objectFit: "cover" }}
                 />
               </div>
               <div className="flex flex-col p-4 gap-3">
-                <div className="flex gap-5">
+                <div className="flex gap-2">
                   <h2 className="font-bold text-xl">{restaurant?.restaurant_name}</h2>
                   <p className="font-bold">⭐ {restaurant?.star}</p>
                 </div>
