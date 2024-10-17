@@ -190,7 +190,7 @@ export const ReviewList = ({
             ) : (
               <div>
                 <div className="flex gap-2  pt-1">
-                  <p className="font-medium"> {review.user.user_name}</p>
+                  <p className="font-medium"> {review?.user?.user_name}</p>
                   <p>{reviewToStar(review.star!)}</p>
                 </div>
                 <div className="flex justify-between">
