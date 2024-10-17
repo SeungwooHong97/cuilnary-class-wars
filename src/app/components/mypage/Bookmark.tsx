@@ -35,7 +35,7 @@ export default function Bookmark() {
   }, [userId]);
 
   const handleLikeClick = async (resName: string | null, resId: string | null) => {
-    const response = await supabase.from("bookmark").delete().match({ user_id: userId, restaurant_id: resId });
+    await supabase.from("bookmark").delete().match({ user_id: userId, restaurant_id: resId });
     toast.success(resName + "찜 목록에서 삭제 완료!");
     setRestaurants((prevRestaurants) => prevRestaurants.filter((restaurant) => restaurant.id !== resId));
   };

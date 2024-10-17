@@ -1,7 +1,7 @@
 "use client";
 import { Restaurant } from "@/types/info";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Heart from "./Heart";
 
