@@ -3,7 +3,7 @@ import ChefList from "./components/mainPage/ChefList";
 
 async function Home() {
   return (
-    <div>
+    <div className="mt-[70px]">
       <MainImage />
       <ChefList />
     </div>

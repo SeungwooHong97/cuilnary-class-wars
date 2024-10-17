@@ -31,8 +31,20 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         <div className="embla__container">
           {slides.map((slide, index) => (
             <div className="embla__slide" key={index}>
-              <div className="relative w-full h-[650px] overflow-hidden bg-black">
-                <Image src={slide} alt={`메인 이미지 ${index + 1}`} fill objectFit="contain" />
+              {/* 배경 레이어 추가 */}
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src={slide}
+                  alt={`배경 이미지 ${index + 1}`}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  className="opacity-70" // 투명도 설정
+                />
+              </div>
+
+              {/* 실제 이미지 레이어 */}
+              <div className="relative w-full h-[650px] z-10">
+                <Image src={slide} alt={`메인 이미지 ${index + 1}`} fill style={{ objectFit: "contain" }} />
               </div>
             </div>
           ))}

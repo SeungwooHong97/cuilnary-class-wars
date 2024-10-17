@@ -1,7 +1,7 @@
 "use client";
 
 import { supabase } from "@/lib/supabaseClient";
-import { Restaurant, Review } from "@/types/info";
+import { Restaurant, Review, ReviewWithUser } from "@/types/info";
 import React, { SetStateAction, useEffect, useState } from "react";
 
 import useAuthStore from "../../../../zustand/userStore";
@@ -14,14 +14,14 @@ import useAuthStore from "../../../../zustand/userStore";
 
 export const ReviewList = ({
   rest,
-  reviews,
-  setReviews
+  reviewList,
+  setReviewList
 }: {
   rest: Restaurant;
-  reviews: Review[];
-  setReviews: React.Dispatch<SetStateAction<Review[]>>;
+  reviewList: any;
+  setReviewList: React.Dispatch<any>;
 }) => {
-  const { userId, nickname } = useAuthStore();
+  const { userId } = useAuthStore();
   //  number을 담아도되고 null을 담아도 되고
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [comment, setComment] = useState<any>("");
@@ -29,13 +29,17 @@ export const ReviewList = ({
 
   useEffect(() => {
     const fetchReviews = async () => {
-      const { data, error } = await supabase.from("reviews").select("*").eq("restaurant_id", rest.id);
+      const { data, error } = await supabase
+        .from("reviews")
+        .select(`*,user(id,user_name)`)
+        .eq("restaurant_id", rest.id);
 
+      console.log("ㅎㅎ", data);
       if (error) {
         console.error("Error", error.message);
         throw new Error("댓글 정보를 가져오는데 실패했습니다");
       } else {
-        setReviews(data);
+        setReviewList(data);
       }
     };
 
@@ -49,7 +53,7 @@ export const ReviewList = ({
       console.error("Error", error.message);
       throw new Error("댓글을 삭제하는데 실패했습니다");
     } else {
-      setReviews((prev) => {
+      setReviewList((prev) => {
         return prev.filter((review) => {
           return review.id !== reviewId;
         });
@@ -67,7 +71,7 @@ export const ReviewList = ({
       console.error("Error", error.message);
       throw new Error("댓글을 수정하는데 실패했습니다");
     } else {
-      setReviews((prev) => {
+      setReviewList((prev) => {
         return prev.map((r) => {
           if (r.id === review.id) {
             return { ...review, review_content: comment, star: star };
@@ -83,19 +87,19 @@ export const ReviewList = ({
   function reviewToStar(starNumber: string) {
     switch (starNumber) {
       case "1":
-        return "⭐";
+        return "⭐ 1점";
 
       case "2":
-        return "⭐⭐";
+        return "⭐⭐ 2점";
 
       case "3":
-        return "⭐⭐⭐";
+        return "⭐⭐⭐ 3점";
 
       case "4":
-        return "⭐⭐⭐⭐";
+        return "⭐⭐⭐⭐ 4점";
 
       case "5":
-        return "⭐⭐⭐⭐⭐";
+        return "⭐⭐⭐⭐⭐ 5점";
     }
   }
 
@@ -103,75 +107,118 @@ export const ReviewList = ({
     setStar(e.target.value);
   };
 
-  const total = reviews.reduce((sum, obj) => sum + Number(obj.star), 0);
-  const average = reviews.length > 0 ? (total / reviews.length).toFixed(1) : 0;
+  const total = reviewList.reduce((sum, obj) => sum + Number(obj.star), 0);
+  const average = reviewList.length > 0 ? (total / reviewList.length).toFixed(1) : 0;
 
   const sortScore = () => {
-    const sortedReviews = [...reviews].sort((a, b) => {
+    const sortedReviews = [...reviewList].sort((a, b) => {
       return Number(b.star) - Number(a.star);
     });
-    setReviews(sortedReviews);
+    setReviewList(sortedReviews);
   };
 
   const sortRecent = () => {
-    const sortedReviews = [...reviews].sort((a, b) => {
+    const sortedReviews = [...reviewList].sort((a, b) => {
       const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
       const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
       return dateB - dateA;
     });
-    setReviews(sortedReviews);
+    setReviewList(sortedReviews);
   };
-
+  console.log("reviewList", reviewList);
   return (
-    <div>
-      <button onClick={sortRecent}>최신순</button>
-      <button onClick={sortScore}>별점순</button>
-      <p>댓글수: {reviews.length}</p>
-      <p>평점: {average}</p>
-      {reviews.map((review, index) => {
+    <div className="bg-stone-200 mt-10 rounded-lg p-4">
+      <div className="flex gap-5  border-black border-b text-xl font-bold">
+        <p>댓글수: {reviewList.length}개</p>
+        <p>평점: {average}점</p>
+      </div>
+      <div className=" flex float-right text-lg font-bold">
+        <button className="m-4 " onClick={sortRecent}>
+          ⏱️ 최신순
+        </button>
+        <button className="mr-8" onClick={sortScore}>
+          ⭐ 별점순
+        </button>
+      </div>
+
+      {reviewList.map((review, index) => {
         return (
-          <div key={review.id}>
+          <div key={review.id} className="border-y mt-20 border-zinc-400 p-4">
             {editIndex === index ? (
-              <div>
-                <select name="" id="" onChange={starDataFunc} value={star}>
-                  <option value="0">별점을 추가해주세요</option>
-                  <option value="1">⭐</option>
-                  <option value="2">⭐⭐</option>
-                  <option value="3">⭐⭐⭐</option>
-                  <option value="4">⭐⭐⭐⭐</option>
-                  <option value="5">⭐⭐⭐⭐⭐</option>
-                </select>
+              <div className="flex flex-col gap-2  p-4 border-zinc-400 ">
+                <div className="flex gap-2">
+                  <p>{review.user.user_name}</p>
+
+                  <select
+                    className="border w-36 border-gray-300 rounded-lg"
+                    name=""
+                    id=""
+                    onChange={starDataFunc}
+                    value={star}
+                  >
+                    <option value="0">별점을 추가해주세요</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                  </select>
+                </div>
                 <input
+                  className="h-24 border border-gray-300 rounded-lg"
                   type="text"
                   value={comment}
                   onChange={(e) => {
                     setComment(e.target.value);
                   }}
                 />
-
-                <button onClick={() => changeReview(review)}>완료</button>
-                <button onClick={() => setEditIndex(null)}>취소</button>
+                <div className="flex gap-3 mx-auto">
+                  <button
+                    className="bg-black py-1 font-bold text-white w-16 rounded-lg "
+                    onClick={() => changeReview(review)}
+                  >
+                    완료
+                  </button>
+                  <button
+                    className="bg-black  font-bold py-1 text-white w-16 rounded-lg "
+                    onClick={() => setEditIndex(null)}
+                  >
+                    취소
+                  </button>
+                </div>
               </div>
             ) : (
               <div>
-                <p>{nickname}</p>
-                <p>{reviewToStar(review.star!)}</p>
-                <p>{review.review_content}</p>
+                <div className="flex gap-2  pt-1">
+                  <p className="font-medium"> {review?.user?.user_name}</p>
+                  <p>{reviewToStar(review.star!)}</p>
+                </div>
+                <div className="flex justify-between">
+                  <p className="pt-1"> {review.review_content}</p>
+                  {userId === review.user_id && (
+                    <div className="flex gap-2 float-right pr-6 ">
+                      <button
+                        className="border border-zinc-400 rounded-lg px-1 "
+                        onClick={() => {
+                          setEditIndex(index);
+                          // type단언 ! 무조건 값이 있다는 단언 무조건 null이 아니다
+                          setStar(review.star!);
+                          setComment(review.review_content);
+                        }}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="border border-zinc-400 rounded-lg px-1 "
+                        onClick={() => deleteReview(review.id)}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
-            {userId === review.user_id && (
-              <button
-                onClick={() => {
-                  setEditIndex(index);
-                  // type단언 ! 무조건 값이 있다는 단언 무조건 null이 아니다
-                  setStar(review.star!);
-                  setComment(review.review_content);
-                }}
-              >
-                수정
-              </button>
-            )}
-            {userId === review.user_id && <button onClick={() => deleteReview(review.id)}>삭제</button>}
           </div>
         );
       })}
