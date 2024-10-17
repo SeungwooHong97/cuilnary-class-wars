@@ -1,10 +1,10 @@
 "use client";
 
-import { Restaurant, Review, ReviewWithUser } from "@/types/info";
-import React, { useState } from "react";
+import { Restaurant } from "@/types/info";
+import { useState } from "react";
 
-import { ReviewList } from "./ReviewList";
 import ReviewInput from "./ReviewInput";
+import { ReviewList } from "./ReviewList";
 
 const Reviews = ({ rest }: { rest: Restaurant }) => {
   const [reviewList, setReviewList] = useState<any>([]);

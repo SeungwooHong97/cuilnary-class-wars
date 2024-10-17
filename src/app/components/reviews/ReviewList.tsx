@@ -1,8 +1,8 @@
 "use client";
 
 import { supabase } from "@/lib/supabaseClient";
-import { Restaurant, Review, ReviewWithUser } from "@/types/info";
-import React, { SetStateAction, useEffect, useState } from "react";
+import { Restaurant, Review } from "@/types/info";
+import React, { useEffect, useState } from "react";
 
 import useAuthStore from "../../../../zustand/userStore";
 
@@ -34,7 +34,6 @@ export const ReviewList = ({
         .select(`*,user(id,user_name)`)
         .eq("restaurant_id", rest.id);
 
-      console.log("ㅎㅎ", data);
       if (error) {
         console.error("Error", error.message);
         throw new Error("댓글 정보를 가져오는데 실패했습니다");
