@@ -13,7 +13,9 @@ const RestaurantCard = ({ rest, data, handleMoveToLocation }: Props) => {
 
   return (
     <div className="relative flex items-center p-3 bg-white rounded-lg border border-gray-300 transition-shadow hover:shadow-md">
-      <Image src={imageUrl} alt={data.chef_name} width={80} height={80} className="rounded-lg" />
+      <div className="relative w-[80px] h-[80px] rounded-lg overflow-hidden">
+        <Image src={imageUrl} alt={data.chef_name} layout="fill" objectFit="cover" />
+      </div>
 
       <div className="flex flex-col ml-4">
         <Link

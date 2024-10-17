@@ -1,4 +1,5 @@
 import { Restaurant } from "@/types/info";
+import Image from "next/image";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
@@ -29,9 +30,14 @@ export default function ClcikOverlay({ rest, setSelectedRestaurant }: Props) {
             onClick={() => setSelectedRestaurant(null)}
           />
         </div>
-        <div>
-          <div className="flex justify-center mb-2">
-            <img src={rest.restaurant_img_url?.images[0]} width="100px" height="70px" alt={rest.restaurant_name} />
+        <div className="flex flex-col justify-center items-center">
+          <div className="relative w-[100px] h-[70px] rounded-lg overflow-hidden mb-2">
+            <Image
+              src={rest.restaurant_img_url!.images[0]}
+              alt={rest.restaurant_name}
+              layout="fill"
+              objectFit="cover"
+            />
           </div>
           <div>
             <div className="flex gap-[10px] items-center">
