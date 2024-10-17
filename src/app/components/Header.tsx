@@ -4,7 +4,6 @@ import useAuthStore from "../../../zustand/userStore";
 import Link from "next/link";
 import { logout } from "@/utils/supabase/supabaseApi";
 import ChefLogo from "../../../public/icons/chef-hat-svgrepo-com.svg";
-import ChatLogo from "../../../public/icons/chat-round-dots-svgrepo-com.svg";
 import Weather from "./Weather";
 
 const Header = () => {
@@ -25,9 +24,9 @@ const Header = () => {
         <div className="flex items-center space-x-3 md:space-x-4">
           <Weather />
 
-          <Link href="/chat" className="text-black text-lg hover:text-gray-700">
+          {/* <Link href="/chat" className="text-black text-lg hover:text-gray-700">
             <ChatLogo className="w-10 h-10 cursor-pointer"></ChatLogo>
-          </Link>
+          </Link> */}
 
           {isLoggedIn ? (
             <>
