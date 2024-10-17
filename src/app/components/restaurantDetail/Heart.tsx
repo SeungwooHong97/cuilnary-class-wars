@@ -15,7 +15,7 @@ const Heart = ({ rest }: { rest: Restaurant }) => {
   const handleLikeClick = async () => {
     if (isLiked) {
       //like가 이미 true이면
-      const response = await supabase.from("bookmark").delete().match({ user_id: userId, restaurant_id: rest.id });
+      await supabase.from("bookmark").delete().match({ user_id: userId, restaurant_id: rest.id });
       toast.success(rest.restaurant_name + "찜 목록에서 삭제 완료!");
       setIsLiked(false);
     } else {

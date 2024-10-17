@@ -5,6 +5,7 @@ import Link from "next/link";
 import { logout } from "@/utils/supabase/supabaseApi";
 import ChefLogo from "../../../public/icons/chef-hat-svgrepo-com.svg";
 import ChatLogo from "../../../public/icons/chat-round-dots-svgrepo-com.svg";
+import Weather from "./Weather";
 
 const Header = () => {
   const { isLoggedIn, setClearAuth } = useAuthStore();
@@ -16,22 +17,30 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md w-full fixed top-0 left-0 z-50">
-      <nav className="container mx-auto px-6 py-4 flex justify-between">
+      <nav className="container mx-auto flex justify-between items-center">
         <Link href="/">
           <ChefLogo className="w-10 h-10 cursor-pointer"></ChefLogo>
         </Link>
 
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-3 md:space-x-4">
+          <Weather />
+
           <Link href="/chat" className="text-black text-lg hover:text-gray-700">
             <ChatLogo className="w-10 h-10 cursor-pointer"></ChatLogo>
           </Link>
 
           {isLoggedIn ? (
             <>
-              <Link href="/myPage" className="text-white text-lg bg-black border border-black rounded-full px-3 py-2.5 transition-colors duration-500 hover:bg-gray-800 hover:border-gray-800">
+              <Link
+                href="/myPage"
+                className="text-white text-lg bg-black border border-black rounded-full px-3 py-2.5 transition-colors duration-500 hover:bg-gray-800 hover:border-gray-800"
+              >
                 마이 페이지
               </Link>
-              <button onClick={handleSignOut} className="text-white text-lg bg-black border border-black rounded-full px-3 py-2.5 transition-colors duration-500 hover:bg-gray-800 hover:border-gray-800">
+              <button
+                onClick={handleSignOut}
+                className="text-white text-lg bg-black border border-black rounded-full px-3 py-2.5 transition-colors duration-500 hover:bg-gray-800 hover:border-gray-800"
+              >
                 로그아웃
               </button>
             </>
@@ -44,7 +53,10 @@ const Header = () => {
                 로그인
               </Link>
 
-              <Link href="/signUp" className="text-white text-lg bg-black border border-black rounded-full px-3 py-2.5 transition-colors duration-500 hover:bg-gray-800 hover:border-gray-800">
+              <Link
+                href="/signUp"
+                className="text-white text-lg bg-black border border-black rounded-full px-3 py-2.5 transition-colors duration-500 hover:bg-gray-800 hover:border-gray-800"
+              >
                 회원가입
               </Link>
             </>

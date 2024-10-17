@@ -37,14 +37,14 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                   src={slide}
                   alt={`배경 이미지 ${index + 1}`}
                   fill
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                   className="opacity-70" // 투명도 설정
                 />
               </div>
 
               {/* 실제 이미지 레이어 */}
               <div className="relative w-full h-[650px] z-10">
-                <Image src={slide} alt={`메인 이미지 ${index + 1}`} fill objectFit="contain" />
+                <Image src={slide} alt={`메인 이미지 ${index + 1}`} fill style={{ objectFit: "contain" }} />
               </div>
             </div>
           ))}
