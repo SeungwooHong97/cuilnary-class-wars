@@ -1,7 +1,7 @@
 "use client";
 
 import { supabase } from "@/lib/supabaseClient";
-import { Restaurant, Review } from "@/types/info";
+import { Restaurant, Review, ReviewWithUser } from "@/types/info";
 import React, { SetStateAction, useEffect, useState } from "react";
 
 import useAuthStore from "../../../../zustand/userStore";
@@ -18,8 +18,8 @@ export const ReviewList = ({
   setReviewList
 }: {
   rest: Restaurant;
-  reviewList: Review[];
-  setReviewList: React.Dispatch<SetStateAction<Review[]>>;
+  reviewList: any;
+  setReviewList: React.Dispatch<any>;
 }) => {
   const { userId } = useAuthStore();
   //  number을 담아도되고 null을 담아도 되고
@@ -29,8 +29,12 @@ export const ReviewList = ({
 
   useEffect(() => {
     const fetchReviews = async () => {
-      const { data, error } = await supabase.from("reviews").select("*").eq("restaurant_id", rest.id);
+      const { data, error } = await supabase
+        .from("reviews")
+        .select(`*,user(id,user_name)`)
+        .eq("restaurant_id", rest.id);
 
+      console.log("ㅎㅎ", data);
       if (error) {
         console.error("Error", error.message);
         throw new Error("댓글 정보를 가져오는데 실패했습니다");
@@ -121,7 +125,7 @@ export const ReviewList = ({
     });
     setReviewList(sortedReviews);
   };
-
+  console.log("reviewList", reviewList);
   return (
     <div className="bg-stone-200 mt-10 rounded-lg p-4">
       <div className="flex gap-5  border-black border-b text-xl font-bold">
@@ -139,11 +143,11 @@ export const ReviewList = ({
 
       {reviewList.map((review, index) => {
         return (
-          <div key={review.id}>
+          <div key={review.id} className="border-y mt-20 border-zinc-400 p-4">
             {editIndex === index ? (
-              <div className="flex flex-col gap-2 border-t p-4 border-zinc-400 mt-20">
+              <div className="flex flex-col gap-2  p-4 border-zinc-400 ">
                 <div className="flex gap-2">
-                  <p>{}</p>
+                  <p>{review.user.user_name}</p>
 
                   <select
                     className="border w-36 border-gray-300 rounded-lg"
@@ -184,30 +188,35 @@ export const ReviewList = ({
                 </div>
               </div>
             ) : (
-              <div className=" mt-20 ">
-                <div className="flex gap-2 border-t border-zinc-400 pt-1">
-                  <p className="font-medium">{}</p>
+              <div>
+                <div className="flex gap-2  pt-1">
+                  <p className="font-medium"> {review.user.user_name}</p>
                   <p>{reviewToStar(review.star!)}</p>
                 </div>
-                <p className="pt-1"> {review.review_content}</p>
-                {userId === review.user_id && (
-                  <div className="flex gap-2 float-right pr-6">
-                    <button
-                      className="border border-zinc-400 rounded-lg px-1 "
-                      onClick={() => {
-                        setEditIndex(index);
-                        // type단언 ! 무조건 값이 있다는 단언 무조건 null이 아니다
-                        setStar(review.star!);
-                        setComment(review.review_content);
-                      }}
-                    >
-                      수정
-                    </button>
-                    <button className="border border-zinc-400 rounded-lg px-1 " onClick={() => deleteReview(review.id)}>
-                      삭제
-                    </button>
-                  </div>
-                )}
+                <div className="flex justify-between">
+                  <p className="pt-1"> {review.review_content}</p>
+                  {userId === review.user_id && (
+                    <div className="flex gap-2 float-right pr-6 ">
+                      <button
+                        className="border border-zinc-400 rounded-lg px-1 "
+                        onClick={() => {
+                          setEditIndex(index);
+                          // type단언 ! 무조건 값이 있다는 단언 무조건 null이 아니다
+                          setStar(review.star!);
+                          setComment(review.review_content);
+                        }}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="border border-zinc-400 rounded-lg px-1 "
+                        onClick={() => deleteReview(review.id)}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>

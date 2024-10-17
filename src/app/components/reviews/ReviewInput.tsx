@@ -1,7 +1,7 @@
 "use client";
 
 import { supabase } from "@/lib/supabaseClient";
-import { Restaurant, Review } from "@/types/info";
+import { Restaurant, Review, ReviewWithUser } from "@/types/info";
 
 import React, { SetStateAction, useState } from "react";
 import useAuthStore from "../../../../zustand/userStore";
@@ -13,8 +13,8 @@ const ReviewInput = ({
   setReviewList
 }: {
   rest: Restaurant;
-  reviewList: Review[];
-  setReviewList: React.Dispatch<SetStateAction<Review[]>>;
+  reviewList: any;
+  setReviewList: React.Dispatch<any>;
 }) => {
   const { userId, nickname } = useAuthStore();
   console.log(userId);

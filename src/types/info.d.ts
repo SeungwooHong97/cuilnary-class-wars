@@ -46,4 +46,6 @@ export type Chefs = Chef & {
   restaurant: Restaurant[];
 };
 
-
+export type ReviewWithUser = Review & {
+  user: User;
+};

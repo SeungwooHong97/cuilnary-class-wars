@@ -1,13 +1,13 @@
 "use client";
 
-import { Restaurant, Review } from "@/types/info";
+import { Restaurant, Review, ReviewWithUser } from "@/types/info";
 import React, { useState } from "react";
 
 import { ReviewList } from "./ReviewList";
 import ReviewInput from "./ReviewInput";
 
 const Reviews = ({ rest }: { rest: Restaurant }) => {
-  const [reviewList, setReviewList] = useState<Review[]>([]);
+  const [reviewList, setReviewList] = useState<any>([]);
 
   return (
     <div className=" m-10">
