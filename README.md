@@ -1,8 +1,4 @@
-# Park Finder
-![image](https://github.com/user-attachments/assets/8b6eeca3-41f6-4816-92bc-ffb7641e68de)
-
 ## 🔗 배포 링크
-https://parkfinder.fujiikaze.kr/<br/>
 <br/>
 
 ## 📖 목차
