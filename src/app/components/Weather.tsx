@@ -1,4 +1,5 @@
 "use Client";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const WEATHER_API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
@@ -49,8 +50,8 @@ export default function Weather() {
   if (weather)
     return (
       <div className="flex items-center">
-        <div className="h-[72px] w-[72px] overflow-hidden">
-          <img className="w-full h-full object-cover" src={weather.icon} alt="날씨 아이콘" />
+        <div className="relative h-[72px] w-[72px] rounded-lg overflow-hidden">
+          <Image src={weather.icon} alt={"chefName"} layout="fill" style={{ objectFit: "cover" }} />
         </div>
         <p className="md:mr-4 text-zinc-400">{weather.temp}°C</p>
       </div>

@@ -1,10 +1,8 @@
 "use client";
 import ChefDetail from "@/app/components/chefDetailPage/ChefDetail";
-import RestaurantList from "@/app/components/chefDetailPage/RestaurantList";
 import KakaoMap from "@/app/components/map/KakaoMap";
 import { supabase } from "@/lib/supabaseClient";
 import { Chefs, Restaurant } from "@/types/info";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type Props = {
