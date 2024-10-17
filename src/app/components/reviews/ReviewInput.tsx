@@ -1,9 +1,9 @@
 "use client";
 
 import { supabase } from "@/lib/supabaseClient";
-import { Restaurant, Review, ReviewWithUser } from "@/types/info";
+import { Restaurant } from "@/types/info";
 
-import React, { SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import useAuthStore from "../../../../zustand/userStore";
 import { toast } from "react-toastify";
 
@@ -51,14 +51,15 @@ const ReviewInput = ({
 
     const { data: listData, error: listError } = await supabase
       .from("reviews")
-      .select()
+      .select(`*,user(id,user_name)`)
       .eq("restaurant_id", rest.id)
-      .returns<Review[]>();
+      .returns<any>();
 
     if (error || !listData || listError || addStarError) {
       toast.error("댓글 등록을 실패하였습니다");
       throw new Error("댓글 등록을 실패하였습니다");
     } else {
+      console.log("listData", listData);
       setReviewList(listData);
       toast.success("댓글 등록 성공!");
       setComment("");

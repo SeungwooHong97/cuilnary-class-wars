@@ -9,7 +9,7 @@ const RestaurantDetail = ({ rest }: { rest: Restaurant }) => {
   return (
     <div className="rounded-lg border border-gray-300 p-2 mt-6 bg-black text-white">
       <div className="flex gap-3 mb-6">
-        {rest?.restaurant_img_url?.images.map((img: string) => {
+        {rest?.restaurant_img_url?.images?.map((img: string) => {
           return <Image key={img} src={img} alt="이미지 없음" width={250} height={250} />;
         })}
       </div>
