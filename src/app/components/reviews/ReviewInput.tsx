@@ -1,7 +1,7 @@
 "use client";
 
 import { supabase } from "@/lib/supabaseClient";
-import { Restaurant, Review } from "@/types/info";
+import { Restaurant, Review, ReviewWithUser } from "@/types/info";
 
 import React, { SetStateAction, useState } from "react";
 import useAuthStore from "../../../../zustand/userStore";
@@ -9,12 +9,12 @@ import { toast } from "react-toastify";
 
 const ReviewInput = ({
   rest,
-  reviews,
-  setReviews
+  reviewList,
+  setReviewList
 }: {
   rest: Restaurant;
-  reviews: Review[];
-  setReviews: React.Dispatch<SetStateAction<Review[]>>;
+  reviewList: any;
+  setReviewList: React.Dispatch<any>;
 }) => {
   const { userId, nickname } = useAuthStore();
   console.log(userId);
@@ -45,7 +45,7 @@ const ReviewInput = ({
     const { error: addStarError } = await supabase
       .from("restaurant")
       .update({
-        star: Number(star) + Number(rest.star) / reviews.length
+        star: Number(star) + Number(rest.star) / reviewList.length
       })
       .eq("restaurant_name", rest.restaurant_name);
 
@@ -59,7 +59,7 @@ const ReviewInput = ({
       toast.error("댓글 등록을 실패하였습니다");
       throw new Error("댓글 등록을 실패하였습니다");
     } else {
-      setReviews(listData);
+      setReviewList(listData);
       toast.success("댓글 등록 성공!");
       setComment("");
       setStar("0");
@@ -92,7 +92,7 @@ const ReviewInput = ({
           setComment(e.target.value);
         }}
       />
-      <button className="bg-black py-1 text-white w-16 rounded-lg mx-auto" onClick={addComment}>
+      <button className="bg-black font-bold  py-1 text-white w-16 rounded-lg mx-auto" onClick={addComment}>
         등록
       </button>
     </div>

@@ -54,7 +54,7 @@ const Heart = ({ rest }: { rest: Restaurant }) => {
   }, [userId]);
 
   return (
-    <>
+    <div className="float-right pr-3 pb-1">
       {isLoggedIn ? (
         isLiked ? (
           <HeartIcon onClick={handleLikeClick} className="cursor-pointer w-6 h-6" />
@@ -62,7 +62,7 @@ const Heart = ({ rest }: { rest: Restaurant }) => {
           <HeartIconLike onClick={handleLikeClick} className="cursor-pointer w-6 h-6" />
         )
       ) : null}
-    </>
+    </div>
   );
 };
 
