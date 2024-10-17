@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Bookmark() {
-  const { userId } = useAuthStore();
+  const { userId, isLoggedIn } = useAuthStore();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]); // 초기값을 빈 배열로 설정
 
   useEffect(() => {
@@ -41,12 +41,12 @@ export default function Bookmark() {
   };
 
   return (
-    <div className="bg-black rounded-lg mt-16 w-full">
+    <div>
       <div className="p-8 rounded-lg">
-        {restaurants.length === 0 ? (
+        {restaurants.length === 0 || !isLoggedIn ? (
           <div className="text-center text-lg content-center">찜한 식당이 없습니다.</div>
         ) : (
-          <div className="flex flex-wrap max-w-screen-lg mx-auto">
+          <div className="flex flex-wrap max-w-screen-lg mx-auto bg-black rounded-lg mt-16 w-full ">
             {restaurants.map((restaurant) => (
               <div
                 key={restaurant.id}
